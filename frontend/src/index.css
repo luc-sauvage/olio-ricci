@@ -1,0 +1,105 @@
+html {
+  font-size: 62.5%; 
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-size: 1.6rem;
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+.grid-template {
+  display: grid;
+  grid-template-areas: 
+  "header"
+  "main"
+  "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: 5rem 1fr 5rem;
+  height: 100%;
+}
+
+header {
+  grid-area: header;
+  background-color: #196C00;
+}
+
+main {
+  grid-area: main;
+  padding: 1rem;
+}
+
+footer {
+  grid-area: footer; 
+  background-color: #196C00;
+  color: white;
+}
+
+/* shared classes */
+
+h1 {
+  font-size: 2.5rem;
+  padding: 1rem 0; 
+}
+
+h2 {
+  font-size: 2.2rem;
+  padding: 1rem 0;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: orangered;
+}
+
+header a {
+  padding: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row.centered {
+  justify-content: center;
+}
+
+.prod-image {
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.card {
+  border: 0.1rem #196C00 solid;
+  background-color: #BFD4BD;
+  border-radius: 0.5rem;
+  margin: 1rem;
+}
+
+.card-body {
+  padding: 1rem;
+  text-align: center;
+}
+
+.card-body > * {
+  margin-bottom: 0.5rem; 
+}
+
+.price {
+  font-size: 1.8rem;
+}
