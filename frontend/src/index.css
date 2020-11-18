@@ -96,8 +96,9 @@ header a {
   text-align: center;
 }
 
-.card-body > * {
-  margin-bottom: 0.5rem; 
+.prod-desc {
+  max-width: 40rem;
+  height: 11rem;
 }
 
 .price {

@@ -6,13 +6,13 @@ export default function App() {
       <div className="grid-template">
           <header className="row">
               <div>
-                  <a href="index.html">
+                  <a href="/">
                       <img src="./images/logo.png" alt="olio ricci logo"></img>
                   </a>
               </div>
               <div>
-                  <a href="cart.html">Carrello</a>
-                  <a href="signin.html">Registrati</a>
+                  <a href="/cart">Carrello</a>
+                  <a href="/register">Registrati</a>
               </div>
           </header>
           <main>
@@ -28,8 +28,11 @@ export default function App() {
                           </a>
                           <div className="card-body">
                               <h2>
-                                  <a href={`/prodotti/${prodotto._id}`}>{prodotto.nome}</a>
+                                  <a href={`/prodotti/${prodotto._id}`}>
+                                      {prodotto.nome}
+                                  </a>
                               </h2>
+                              <p className="prod-desc">{prodotto.descrizione}</p>
                               <div className="price">€ {prodotto.prezzo}</div>
                           </div>
                       </div>
