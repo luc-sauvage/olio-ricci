@@ -68,6 +68,30 @@ header a {
   padding: 1rem;
 }
 
+.button {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: orangered;
+  color: white;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.button:hover {
+  background-color: orange;
+}
+
+.button:active {
+  background-color: white;
+  color:orangered;
+}
+
+.button.block {
+  width: 100%;
+  margin-top: 10px;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -96,6 +120,14 @@ header a {
   text-align: center;
 }
 
+.row-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 5px; 
+}
+
 .prod-desc {
   max-width: 40rem;
   height: 11rem;
@@ -103,4 +135,14 @@ header a {
 
 .price {
   font-size: 1.8rem;
+}
+
+.disponibile {
+  color: #196C00;
+  font-weight: 500;
+}
+
+.esaurito {
+  color: red;
+  font-weight: 500;
 }

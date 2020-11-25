@@ -1,8 +1,11 @@
 import React from "react";
-import data from "./data.js";
+import { BrowserRouter, Route } from "react-router-dom";
+import Shop from "./shop"
+import Home from "./home"
 
 export default function App() {
   return (
+      <BrowserRouter>
       <div className="grid-template">
           <header className="row">
               <div>
@@ -16,34 +19,15 @@ export default function App() {
               </div>
           </header>
           <main>
-              <div className="row centered">
-                  {data.prodotti.map((prodotto) => (
-                      <div key={prodotto._id} className="card">
-                          <a href={`/prodotti/${prodotto._id}`}>
-                              <img
-                                  className="prod-image"
-                                  src={prodotto.foto}
-                                  alt={`olio ricci qualità ${prodotto.nome}`}
-                              ></img>
-                          </a>
-                          <div className="card-body">
-                              <h2>
-                                  <a href={`/prodotti/${prodotto._id}`}>
-                                      {prodotto.nome}
-                                  </a>
-                              </h2>
-                              <p className="prod-desc">{prodotto.descrizione}</p>
-                              <div className="price">€ {prodotto.prezzo}</div>
-                          </div>
-                      </div>
-                  ))}
-              </div>
+              <Route exact path="/" component={Home}></Route> 
+              <Route path="/shop" component={Shop}></Route>
           </main>
           <footer className="row centered">
               All rights reserved - Azienda Agricola Alessandro Ricci - via
               della Variante 2, 05020 Montecchio
           </footer>
       </div>
+      </BrowserRouter>
   );
 }
 
