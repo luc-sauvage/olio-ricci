@@ -1,10 +1,20 @@
-import React from "react";
-import data from "./data.js";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Shop() {
+    const [prodotti, setProdotti] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await axios.get("/api/prodotti");
+            setProdotti(data);
+        }
+        fetchData();
+    }, []);
+
     return (
         <div className="row centered">
-            {data.prodotti.map((prodotto) => (
+            {prodotti.map((prodotto) => (
                 <div key={prodotto._id} className="card">
                     <a href={`/prodotti/${prodotto._id}`}>
                         <img
