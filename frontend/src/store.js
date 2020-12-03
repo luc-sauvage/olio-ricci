@@ -1,8 +1,6 @@
 import thunk from "redux-thunk";
-import {
-    productListReducer,
-    addToCartReducer,
-} from "./reducers/productReducers";
+import { addToCartReducer } from "./reducers/cartReducers";
+import { productListReducer } from "./reducers/productReducers";
 const {
     createStore,
     compose,

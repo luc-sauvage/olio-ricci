@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import LoadingBox from "./components/loadingbox.js";
 import MessageBox from "./components/messagebox.js";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts, addProductToCart } from "./actions/productActions.js";
+import { listProducts } from "./actions/productActions.js";
+import { addProductToCart } from "./actions/cartActions.js";
 
 export default function Shop() {
     const dispatch = useDispatch();
-    const [qty, setQty] = useState(1);
+    const [quantita, setQuantita] = useState(1);
     const productList = useSelector((state) => state.productList);
     const { loading, error, prodotti } = productList;
 
@@ -15,6 +16,8 @@ export default function Shop() {
     }, []);
 
     const addToCartHandler = (prodotto, qty) => {
+        /* prodotto.quantità = Number(qty);
+        console.log("prodotto, qty: ", prodotto); */
         dispatch(addProductToCart(prodotto, qty));
     };
 
@@ -57,7 +60,9 @@ export default function Shop() {
                                             <div>
                                                 <select
                                                     onChange={(e) =>
-                                                        setQty(e.target.value)
+                                                        setQuantita(
+                                                            e.target.value
+                                                        )
                                                     }
                                                 >
                                                     <option value="1">1</option>
@@ -77,7 +82,10 @@ export default function Shop() {
                                         </div>
                                         <button
                                             onClick={() =>
-                                                addToCartHandler(prodotto, qty)
+                                                addToCartHandler(
+                                                    prodotto,
+                                                    quantita
+                                                )
                                             }
                                             className="button block"
                                         >
