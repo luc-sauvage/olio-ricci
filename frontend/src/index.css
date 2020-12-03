@@ -1,148 +1,174 @@
 html {
-  font-size: 62.5%; 
-  box-sizing: border-box;
+    font-size: 62.5%;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  height: 100vh;
-  font-size: 1.6rem;
-  font-family: Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    height: 100vh;
+    font-size: 1.6rem;
+    font-family: Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  height: 100%;
+    height: 100%;
 }
 
 .grid-template {
-  display: grid;
-  grid-template-areas: 
-  "header"
-  "main"
-  "footer";
-  grid-template-columns: 1fr;
-  grid-template-rows: 5rem 1fr 5rem;
-  height: 100%;
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: 5rem 1fr 5rem;
+    height: 100%;
 }
 
 header {
-  grid-area: header;
-  background-color: #196C00;
+    grid-area: header;
+    background-color: #196c00;
 }
 
 main {
-  grid-area: main;
-  padding: 1rem;
+    grid-area: main;
+    padding: 1rem;
 }
 
 footer {
-  grid-area: footer; 
-  background-color: #196C00;
-  color: white;
+    grid-area: footer;
+    background-color: #196c00;
+    color: white;
 }
 
 /* shared classes */
 
 h1 {
-  font-size: 2.5rem;
-  padding: 1rem 0; 
+    font-size: 2.5rem;
+    padding: 1rem 0;
 }
 
 h2 {
-  font-size: 2.2rem;
-  padding: 1rem 0;
+    font-size: 2.2rem;
+    padding: 1rem 0;
 }
 
 a {
-  text-decoration: none;
-  color: white;
+    text-decoration: none;
+    color: white;
 }
 
 a:hover {
-  color: orangered;
+    color: orangered;
 }
 
 header a {
-  padding: 1rem;
+    padding: 1rem;
+}
+
+select {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+select:hover {
+    border: 0.1rem solid orangered;
 }
 
 .button {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: orangered;
-  color: white;
-  border: none;
-  cursor: pointer;
-  outline: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: orangered;
+    color: white;
+    border: none;
+    cursor: pointer;
+    outline: none;
 }
 
 .button:hover {
-  background-color: orange;
+    background-color: orange;
 }
 
 .button:active {
-  background-color: white;
-  color:orangered;
+    background-color: white;
+    color: orangered;
 }
 
 .button.block {
-  width: 100%;
-  margin-top: 10px;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .row.centered {
-  justify-content: center;
+    justify-content: center;
 }
 
 .prod-image {
-  border-radius: 0.5rem;
-  width: 100%;
+    border-radius: 0.5rem;
+    width: 100%;
 }
 
 .card {
-  border: 0.1rem #196C00 solid;
-  background-color: #BFD4BD;
-  border-radius: 0.5rem;
-  margin: 1rem;
+    border: 0.1rem #196c00 solid;
+    background-color: #bfd4bd;
+    border-radius: 0.5rem;
+    margin: 1rem;
 }
 
 .card-body {
-  padding: 1rem;
-  text-align: center;
+    padding: 1rem;
+    text-align: center;
 }
 
 .row-card {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 5px; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px;
 }
 
 .prod-desc {
-  max-width: 40rem;
-  height: 11rem;
+    max-width: 40rem;
+    height: 11rem;
 }
 
 .price {
-  font-size: 1.8rem;
+    font-size: 1.8rem;
 }
 
 .disponibile {
-  color: #196C00;
-  font-weight: 500;
+    color: #196c00;
+    font-weight: 500;
 }
 
 .esaurito {
-  color: red;
-  font-weight: 500;
+    color: red;
+    font-weight: 500;
+}
+
+.danger {
+    padding: 1rem;
+    border: 0.1rem solid transparent;
+    border-radius: 0.5rem;
+}
+
+.alert-info {
+    color: #2020a0;
+    background-color: #e0e0ff;
+}
+
+.alert-danger {
+    color: #a02020;
+    background-color: #ffe0e0e0;
 }
