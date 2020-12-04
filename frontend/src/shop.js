@@ -7,7 +7,7 @@ import { addProductToCart } from "./actions/cartActions.js";
 
 export default function Shop() {
     const dispatch = useDispatch();
-    const [quantita, setQuantita] = useState(1);
+    let [quantita, setQuantita] = useState(1);
     const productList = useSelector((state) => state.productList);
     const { loading, error, prodotti } = productList;
 
@@ -58,7 +58,7 @@ export default function Shop() {
                                         <div className="row-card">
                                             <div>Quantità </div>
                                             <div>
-                                                <select
+                                                <select id="qty"
                                                     onChange={(e) =>
                                                         setQuantita(
                                                             e.target.value
