@@ -68,16 +68,6 @@ header a {
     padding: 1rem;
 }
 
-select {
-    padding: 0.7rem;
-    border-radius: 0.5rem;
-    margin-left: 0.5rem;
-}
-
-select:hover {
-    border: 0.1rem solid orangered;
-}
-
 .button {
     padding: 1rem;
     border-radius: 0.5rem;

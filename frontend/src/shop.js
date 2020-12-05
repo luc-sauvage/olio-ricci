@@ -4,21 +4,36 @@ import MessageBox from "./components/messagebox.js";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "./actions/productActions.js";
 import { addProductToCart } from "./actions/cartActions.js";
+import Select from "react-select";
 
 export default function Shop() {
     const dispatch = useDispatch();
-    let [quantita, setQuantita] = useState(1);
+    let [selectedOption, setSelectedOption] = useState(null);
     const productList = useSelector((state) => state.productList);
     const { loading, error, prodotti } = productList;
 
+    const selectOptions = [
+        {value: 1, label: 1},
+        {value: 2, label: 2},
+        {value: 3, label: 3},
+        {value: 4, label: 4},
+        {value: 5, label: 5},
+        {value: 6, label: 6},
+        {value: 7, label: 7},
+        {value: 8, label: 8},
+        {value: 9, label: 9},
+        {value: 10, label: 10},
+    ];
+
     useEffect(() => {
         dispatch(listProducts());
-    }, []);
+    }, [dispatch]);
 
     const addToCartHandler = (prodotto, qty) => {
-        /* prodotto.quantità = Number(qty);
-        console.log("prodotto, qty: ", prodotto); */
-        dispatch(addProductToCart(prodotto, qty));
+        console.log("informazioni prodotto", prodotto);
+        console.log("informazioni quantità", qty.value);
+        dispatch(addProductToCart(prodotto, qty.value));
+        /* setSelectedOption(null); */
     };
 
     return (
@@ -58,33 +73,14 @@ export default function Shop() {
                                         <div className="row-card">
                                             <div>Quantità </div>
                                             <div>
-                                                <select id="qty"
-                                                    onChange={(e) =>
-                                                        setQuantita(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                >
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">
-                                                        10
-                                                    </option>
-                                                </select>
+                                                <Select options={selectOptions} onChange={setSelectedOption} defaultValue={selectedOption}/>
                                             </div>
                                         </div>
                                         <button
                                             onClick={() =>
                                                 addToCartHandler(
                                                     prodotto,
-                                                    quantita
+                                                    selectedOption
                                                 )
                                             }
                                             className="button block"
