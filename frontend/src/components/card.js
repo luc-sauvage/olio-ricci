@@ -10,8 +10,6 @@ export default function Card ({prodotto}) {
     const addToCartHandler = (prodotto, qty) => {
         
         dispatch(addProductToCart(prodotto, qty));
-        /* dispatch(addProductToCart(prodotto, qty.value)); */
-        /* setSelectedOption(null); */
     };
 
     return (
@@ -45,7 +43,6 @@ export default function Card ({prodotto}) {
                                             <div className="row-card">
                                                 <div>Quantità </div>
                                                 <div>
-                                                    {/* <Select options={selectOptions} onChange={setSelectedOption} defaultValue={selectedOption}/> */}
                                                     <select id="qty"
                                                         onChange={(e) =>
                                                             setQuantita(
