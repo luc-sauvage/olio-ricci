@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Link, Route } from "react-router-dom";
 import Shop from "./shop";
 import Home from "./home";
 import Cart from "./cart";
@@ -18,9 +18,9 @@ export default function App() {
                         </a>
                     </div>
                     <div>
-                        <a href="/shop">Negozio</a>
-                        <a href="/cart">Carrello</a>
-                        <a href="/register">Registrati</a>
+                        <Link to="/shop">Negozio</Link>
+                        <Link to="/cart">Carrello</Link>
+                        <Link to="/register">Registrati</Link>
                     </div>
                 </header>
                 <main>

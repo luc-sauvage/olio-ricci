@@ -12,7 +12,7 @@ export const addToCartReducer = (state = { cart: [] }, action) => {
             if (found) {
                 item.product = found.product;
                 let newQty = item.qty + found.qty
-                let newCart = state.cart.map(element => {
+                let newCart = cart.map(element => {
                     if (element.product._id === found.product._id) {
                         return { ...element, qty: newQty }
                     } else {

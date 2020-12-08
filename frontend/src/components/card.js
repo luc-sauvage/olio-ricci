@@ -50,16 +50,16 @@ export default function Card ({prodotto}) {
                                                             )
                                                         }
                                                     >
-                                                        <option class="1" value="1">1</option>
-                                                        <option class="2" value="2">2</option>
-                                                        <option class="3" value="3">3</option>
-                                                        <option class="4" value="4">4</option>
-                                                        <option class="5" value="5">5</option>
-                                                        <option class="6" value="6">6</option>
-                                                        <option class="7" value="7">7</option>
-                                                        <option class="8" value="8">8</option>
-                                                        <option class="9" value="9">9</option>
-                                                        <option class="10" value="10">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">
                                                             10
                                                         </option>
                                                     </select>

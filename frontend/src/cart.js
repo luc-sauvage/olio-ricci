@@ -5,11 +5,12 @@ import MessageBox from "./components/messagebox.js";
 
 export default function Cart() {
     const productsCart = useSelector((state) => state.productCart);
+    console.log("cart", productsCart);
     const { loading, error, productsInCart } = productsCart;
 
     return (
         <div className="row centered">
-            {loading ? (
+            {/* {loading ? (
                 <LoadingBox></LoadingBox>
             ) : error ? (
                 <MessageBox variant="danger">{error}</MessageBox>
@@ -24,7 +25,7 @@ export default function Cart() {
                             <div key={product._id} className="card"></div>
                         ))}
                 </>
-            )}
+            )} */}
         </div>
     );
 }
