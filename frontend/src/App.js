@@ -3,8 +3,11 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import Shop from "./shop";
 import Home from "./home";
 import Cart from "./cart";
+import { useSelector } from "react-redux";
 
 export default function App() {
+    const productCart = useSelector(state => state.productCart);
+    const {cart} = productCart;
     return (
         <BrowserRouter>
             <div className="grid-template">
@@ -20,6 +23,9 @@ export default function App() {
                     <div>
                         <Link to="/shop">Negozio</Link>
                         <Link to="/cart">Carrello</Link>
+                        {cart.length > 0 && (
+                            <span className="badge">{cart.length}</span>
+                        )}
                         <Link to="/register">Registrati</Link>
                     </div>
                 </header>
