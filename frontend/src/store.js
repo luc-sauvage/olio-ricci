@@ -8,7 +8,11 @@ const {
     combineReducers,
 } = require("redux");
 
-const initialState = {};
+const initialState = {
+    productCart: {
+        cart: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
+    }
+};
 const reducer = combineReducers({
     productList: productListReducer,
     productCart: addToCartReducer,
