@@ -6,8 +6,8 @@ import Cart from "./cart";
 import { useSelector } from "react-redux";
 
 export default function App() {
-    const productCart = useSelector(state => state.productCart);
-    const {cart} = productCart;
+    const productsCart = useSelector(state => state.productCart);
+    const {cart} = productsCart;
     return (
         <BrowserRouter>
             <div className="grid-template">
@@ -21,6 +21,7 @@ export default function App() {
                         </a>
                     </div>
                     <div>
+                        <Link to="/">Home</Link>
                         <Link to="/shop">Negozio</Link>
                         <Link to="/cart">Carrello</Link>
                         {cart.length > 0 && (
