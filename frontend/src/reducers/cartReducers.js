@@ -1,4 +1,4 @@
-const { CART_ADD_ITEM, CHANGE_QTY_CART } = require("../constants/cartConstants");
+const { CART_ADD_ITEM, CHANGE_QTY_CART, CART_REMOVE_ITEM } = require("../constants/cartConstants");
 
 export const addToCartReducer = (state = { cart: [] }, action) => {
     switch (action.type) {
@@ -57,6 +57,8 @@ export const addToCartReducer = (state = { cart: [] }, action) => {
                 };
             }
 
+        case CART_REMOVE_ITEM: 
+            return {...state, cart: state.cart.filter( element => element.product._id !== action.payload)}
         default:
             return state;
     }

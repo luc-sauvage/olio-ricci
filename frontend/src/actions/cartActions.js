@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM, CHANGE_QTY_CART } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM, CHANGE_QTY_CART } from "../constants/cartConstants";
 
 export const addProductToCart = (product, itemQty) => async (dispatch, getState) => {
     var qty = Number(itemQty);
@@ -14,6 +14,14 @@ export const changeCartQuantity = (product, itemQty) => async (dispatch, getStat
     dispatch({
         type: CHANGE_QTY_CART,
         payload: { product, qty },
+    });
+    localStorage.setItem("cart", JSON.stringify(getState().productCart.cart));
+}
+
+export const removeFromCart = (productId) => (dispatch, getState) =>{
+    dispatch({
+        type: CART_REMOVE_ITEM,
+        payload: productId,
     });
     localStorage.setItem("cart", JSON.stringify(getState().productCart.cart));
 }

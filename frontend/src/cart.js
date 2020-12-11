@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { changeCartQuantity } from "./actions/cartActions.js";
+import { changeCartQuantity, removeFromCart } from "./actions/cartActions.js";
 import MessageBox from "./components/messagebox.js";
 
 export default function Cart(props) {
@@ -10,8 +10,8 @@ export default function Cart(props) {
     console.log("cart", productsCart);
     const { cart } = productsCart;
 
-    function removeFromCartHandler (id) {
-        // azione per togli dal carrello 
+    function removeFromCartHandler (productId) {
+        dispatch(removeFromCart(productId));
     }
 
     function checkoutHandler () {
@@ -104,7 +104,7 @@ export default function Cart(props) {
                                     onClick={checkoutHandler}
                                     className="button"
                                 >
-                                    Vai al checkout
+                                    Vai al pagamento
                                 </button>
                             </li>
                         </ul>
