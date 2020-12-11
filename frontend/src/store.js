@@ -1,5 +1,5 @@
 import thunk from "redux-thunk";
-import { addToCartReducer } from "./reducers/cartReducers";
+import { addToCartReducer, changeCartQuantityReducer } from "./reducers/cartReducers";
 import { productListReducer } from "./reducers/productReducers";
 const {
     createStore,

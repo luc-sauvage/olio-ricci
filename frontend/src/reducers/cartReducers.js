@@ -1,4 +1,4 @@
-const { CART_ADD_ITEM } = require("../constants/cartConstants");
+const { CART_ADD_ITEM, CHANGE_QTY_CART } = require("../constants/cartConstants");
 
 export const addToCartReducer = (state = { cart: [] }, action) => {
     switch (action.type) {
@@ -29,6 +29,34 @@ export const addToCartReducer = (state = { cart: [] }, action) => {
                     cart: [...cart, item],
                 };
             }
+        
+        case CHANGE_QTY_CART:
+            let addedItem = action.payload;
+            let modifiedCart = state.cart;
+
+            const foundInCart = modifiedCart.find(
+                (element) => element.product._id === addedItem.product._id
+            );
+            if (foundInCart) {
+                addedItem.product = foundInCart.product;
+                let newCart = modifiedCart.map(element => {
+                    if (element.product._id === foundInCart.product._id) {
+                        return { ...element, qty: addedItem.qty  }
+                    } else {
+                        return element;
+                    }
+                })
+                return {
+                    ...state,
+                    cart: newCart,
+                };
+            } else {
+                return {
+                    ...state,
+                    cart: [...cart, item],
+                };
+            }
+
         default:
             return state;
     }
