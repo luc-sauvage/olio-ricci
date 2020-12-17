@@ -89,9 +89,9 @@ export default function Cart(props) {
                         <ul>
                             <li>
                                 <h2>
-                                    Subtotal (
+                                    Subtotale (
                                     {cart.reduce((a, c) => a + c.qty, 0)}{" "}
-                                    items): €{" "}
+                                    articoli): €{" "}
                                     {cart.reduce(
                                         (a, c) => a + c.product.prezzo * c.qty,
                                         0
