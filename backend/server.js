@@ -1,22 +1,24 @@
 import express from "express";
 import mongoose from "mongoose";
-import data from "./data.js";
+import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-mongoose.connect("mongodb://localhost/olio-ricci", {
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/olio-ricci", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
 } );
 
-app.get("/api/prodotti", (req, res) => {
-    console.log(data.prodotti);
-    res.send(data.prodotti);
-});
-
 app.use("/api/users", userRouter);
-
+app.use("/api/prodotti", productRouter)
 app.get("/", (req, res) => {
     console.log("test");
     res.send("server is ready");
