@@ -229,3 +229,41 @@ input {
 .form-text-link {
     color: #196c00;
 }
+
+/* dropdown */
+
+.dropdown {
+    display: inline-block;
+    position: relative;
+    color: white;
+    padding: 0 1rem; 
+    cursor: pointer;
+}
+
+.dropdown:hover {
+    color:  orangered;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 4rem;
+    right: -2rem;
+    padding: 1rem; 
+    z-index: 1000;
+    min-width: 12rem;
+    background-color: #196c00;
+    margin: 0;
+    margin-top: 0.4rem; 
+    border-radius: 0.5rem;
+}
+
+.dropdown-off {
+    display: none; 
+}
+
+.right {
+    transform: rotate(-90deg);
+}
+.down {
+    transform: rotate(0deg);
+}

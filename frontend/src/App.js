@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import Shop from "./shop";
 import Home from "./home";
 import Cart from "./cart";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LogIn from "./login";
+import { logout } from "./actions/userActions";
 
 export default function App() {
     const productsCart = useSelector(state => state.productCart);
-    const {cart} = productsCart;
+    const { cart } = productsCart;
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+    const dispatch = useDispatch();
+    function signoutHandler() {
+        dispatch(logout);
+    }
+
+    useEffect(() => {
+        let userName = document.querySelector(".dropdown");
+        let arrow = document.querySelector(".fa-caret-down");
+        let dropdown = document.querySelector(".dropdown-content");
+        userName.addEventListener("click", function () {
+            dropdown.classList.toggle("dropdown-off");
+            arrow.classList.toggle("right");
+            arrow.classList.toggle("down");
+        });
+    }, []);
+
     return (
         <BrowserRouter>
             <div className="grid-template">
@@ -28,7 +48,24 @@ export default function App() {
                         {cart.length > 0 && (
                             <span className="badge">{cart.length}</span>
                         )}
-                        <Link to="/login">Login</Link>
+                        {userInfo ? (
+                            <div className="dropdown">
+                                <p>
+                                    Ciao, {userInfo.firstName}{" "}
+                                    <i className="fa fa-caret-down right "></i>{" "}
+                                </p>
+                                <ul className="dropdown-content dropdown-off">
+                                    <Link
+                                        to="#signout"
+                                        onClick={signoutHandler}
+                                    >
+                                        Logout
+                                    </Link>
+                                </ul>
+                            </div>
+                        ) : (
+                            <Link to="/login">Login</Link>
+                        )}
                     </div>
                 </header>
                 <main>
