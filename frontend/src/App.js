@@ -4,6 +4,7 @@ import Shop from "./shop";
 import Home from "./home";
 import Cart from "./cart";
 import { useSelector } from "react-redux";
+import LogIn from "./login";
 
 export default function App() {
     const productsCart = useSelector(state => state.productCart);
@@ -27,13 +28,14 @@ export default function App() {
                         {cart.length > 0 && (
                             <span className="badge">{cart.length}</span>
                         )}
-                        <Link to="/register">Registrati</Link>
+                        <Link to="/login">Login</Link>
                     </div>
                 </header>
                 <main>
-                    <Route exact path="/" component={Home}></Route>
                     <Route path="/shop" component={Shop}></Route>
                     <Route path="/cart" component={Cart}></Route>
+                    <Route path="/login" component={LogIn}></Route>
+                    <Route exact path="/" component={Home}></Route>
                 </main>
                 <footer className="row centered">
                     All rights reserved - Azienda Agricola Alessandro Ricci -
