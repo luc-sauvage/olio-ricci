@@ -14,20 +14,24 @@ export default function App() {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
     const dispatch = useDispatch();
+
     function signoutHandler() {
-        dispatch(logout);
+        console.log("signoutHandler has fired");
+        dispatch(logout());
     }
 
     useEffect(() => {
-        let userName = document.querySelector(".dropdown");
-        let arrow = document.querySelector(".fa-caret-down");
-        let dropdown = document.querySelector(".dropdown-content");
-        userName.addEventListener("click", function () {
-            dropdown.classList.toggle("dropdown-off");
-            arrow.classList.toggle("right");
-            arrow.classList.toggle("down");
-        });
-    }, []);
+        if (userInfo) {
+            let userName = document.querySelector(".dropdown");
+            let arrow = document.querySelector(".fa-caret-down");
+            let dropdown = document.querySelector(".dropdown-content");
+            userName.addEventListener("click", function () {
+                dropdown.classList.toggle("dropdown-off");
+                arrow.classList.toggle("right");
+                arrow.classList.toggle("down");
+            });
+        }
+    }, [userInfo]);
 
     return (
         <BrowserRouter>
@@ -55,12 +59,7 @@ export default function App() {
                                     <i className="fa fa-caret-down right "></i>{" "}
                                 </p>
                                 <ul className="dropdown-content dropdown-off">
-                                    <Link
-                                        to="#signout"
-                                        onClick={signoutHandler}
-                                    >
-                                        Logout
-                                    </Link>
+                                    <Link to="/login" onClick={signoutHandler}>Logout</Link>
                                 </ul>
                             </div>
                         ) : (

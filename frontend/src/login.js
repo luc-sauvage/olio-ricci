@@ -20,7 +20,7 @@ export default function LogIn(props) {
     function submitHandler(event) {
         event.preventDefault();
         dispatch(login(email, password));
-    } 
+    }
 
     useEffect(() => {
         if (userInfo) {
@@ -53,12 +53,16 @@ export default function LogIn(props) {
                     ></input>
                 </div>
                 <div>
-                    <button className="button" type="submit">Entra</button>
+                    <button className="button" type="submit">
+                        Entra
+                    </button>
                 </div>
                 <div>
                     <div className="form-text">
-                        Non sei ancora registrato?{" "} 
-                        <Link className="form-text-link" to="/register">Crea un account</Link>
+                        Non sei ancora registrato?{" "}
+                        <Link className="form-text-link" to="/register">
+                            Crea un account
+                        </Link>
                     </div>
                 </div>
             </form>

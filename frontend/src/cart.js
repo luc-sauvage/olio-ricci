@@ -10,6 +10,9 @@ export default function Cart(props) {
     console.log("cart", productsCart);
     const { cart } = productsCart;
 
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
     function removeFromCartHandler (productId) {
         dispatch(removeFromCart(productId));
     }
@@ -99,13 +102,13 @@ export default function Cart(props) {
                                 </h2>
                             </li>
                             <li>
-                                <button
+                                {userInfo ? <button
                                     type="button"
                                     onClick={checkoutHandler}
                                     className="button"
                                 >
                                     Vai al pagamento
-                                </button>
+                                </button> : <button className="button"><Link to="/login">Vai al login</Link></button>}
                             </li>
                         </ul>
                     </div>
