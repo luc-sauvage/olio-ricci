@@ -8,6 +8,7 @@ import LogIn from "./login";
 import { logout } from "./actions/userActions";
 
 export default function App() {
+
     const productsCart = useSelector(state => state.productCart);
     const { cart } = productsCart;
 
@@ -16,7 +17,6 @@ export default function App() {
     const dispatch = useDispatch();
 
     function signoutHandler() {
-        console.log("signoutHandler has fired");
         dispatch(logout());
     }
 
@@ -68,9 +68,9 @@ export default function App() {
                     </div>
                 </header>
                 <main>
-                    <Route path="/shop" component={Shop}></Route>
-                    <Route path="/cart" component={Cart}></Route>
-                    <Route path="/login" component={LogIn}></Route>
+                    <Route exact path="/shop" component={Shop}></Route>
+                    <Route exact path="/cart" component={Cart}></Route>
+                    <Route exact path="/login" component={LogIn}></Route>
                     <Route exact path="/" component={Home}></Route>
                 </main>
                 <footer className="row centered">

@@ -8,12 +8,11 @@ export default function LogIn(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const {lastPage} = useSelector((state) => state.lastPage)
+    console.log(lastPage);
+
     const userLogin = useSelector((state) => state.userLogin);
     const {userInfo} = userLogin;
-
-    const redirect = props.location.search
-        ? props.location.search.split("=")[1]
-        : "/";
 
     const dispatch = useDispatch();
 
@@ -23,10 +22,11 @@ export default function LogIn(props) {
     }
 
     useEffect(() => {
+        console.log(lastPage);
         if (userInfo) {
-            props.history.push(redirect);
+            props.history.push(`${lastPage}`);
         }
-    }, [userInfo]);
+    }, [userInfo, props.history, lastPage]);
 
     return (
         <div>

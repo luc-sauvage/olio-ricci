@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { changeCartQuantity, removeFromCart } from "./actions/cartActions.js";
+import { setLastPageAction } from "./actions/navActions.js";
 import MessageBox from "./components/messagebox.js";
 
 export default function Cart(props) {
@@ -10,16 +11,23 @@ export default function Cart(props) {
     console.log("cart", productsCart);
     const { cart } = productsCart;
 
+    
+    const redirect = props.location.pathname;
+
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
-    function removeFromCartHandler (productId) {
+    function removeFromCartHandler(productId) {
         dispatch(removeFromCart(productId));
     }
 
-    function checkoutHandler () {
+    function checkoutHandler() {
         props.history.push("/signin?redirect=shipping");
     }
+
+    useEffect(() => {
+        dispatch(setLastPageAction(redirect));
+    });
 
     return (
         <div className="row top">
@@ -102,13 +110,19 @@ export default function Cart(props) {
                                 </h2>
                             </li>
                             <li>
-                                {userInfo ? <button
-                                    type="button"
-                                    onClick={checkoutHandler}
-                                    className="button"
-                                >
-                                    Vai al pagamento
-                                </button> : <button className="button"><Link to="/login">Vai al login</Link></button>}
+                                {userInfo ? (
+                                    <button
+                                        type="button"
+                                        onClick={checkoutHandler}
+                                        className="button"
+                                    >
+                                        Vai al pagamento
+                                    </button>
+                                ) : (
+                                    <button className="button">
+                                        <Link to="/login">Vai al login</Link>
+                                    </button>
+                                )}
                             </li>
                         </ul>
                     </div>

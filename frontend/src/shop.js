@@ -4,16 +4,20 @@ import MessageBox from "./components/messagebox.js";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "./actions/productActions.js";
 import Card from "./components/card.js"
+import { setLastPageAction } from "./actions/navActions.js";
 
-export default function Shop() {
+export default function Shop(props) {
     const dispatch = useDispatch();
     const productList = useSelector((state) => state.productList);
     const { loading, error, prodotti } = productList;
 
+    const redirect = props.location.pathname;
+
 
     useEffect(() => {
         dispatch(listProducts());
-    }, [dispatch]);
+        dispatch(setLastPageAction(redirect));
+    }, [dispatch, redirect]);
 
     return (
         <div className="row centered">

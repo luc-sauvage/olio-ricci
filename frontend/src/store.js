@@ -1,5 +1,6 @@
 import thunk from "redux-thunk";
 import { addToCartReducer } from "./reducers/cartReducers";
+import { setLastPageReducer } from "./reducers/navReducers";
 import { productListReducer } from "./reducers/productReducers";
 import { userLoginReducer } from "./reducers/userReducers";
 const {
@@ -19,12 +20,18 @@ const initialState = {
         userInfo: localStorage.getItem("userData")
         ? JSON.parse(localStorage.getItem("userData"))
         : "",
+    },
+    lastPage: {
+        lastPage: localStorage.getItem("lastPage")
+        ? JSON.parse(localStorage.getItem("lastPage"))
+        : "",
     }
 };
 const reducer = combineReducers({
     productList: productListReducer,
     productCart: addToCartReducer,
-    userLogin: userLoginReducer
+    userLogin: userLoginReducer,
+    lastPage: setLastPageReducer
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
