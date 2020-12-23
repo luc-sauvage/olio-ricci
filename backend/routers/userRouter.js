@@ -33,9 +33,8 @@ userRouter.post(
                 });
                 return;
             }
-        } else {
-            res.status(401).send({ message: "username o password non validi" });
         }
+        res.status(401).send({ message: "username o password non validi" });
     })
 );
 

@@ -41,7 +41,7 @@ export default function Registration(props) {
         <div>
             <form className="form" onSubmit={submitHandler}>
                 <div>
-                    <h1>Log In</h1>
+                    <h1>Crea un account</h1>
                 </div>
                 {(passwordError) && (
                     <div className="danger alert-danger">Le password non corrispondono, ricontrolla!</div>
