@@ -77,8 +77,8 @@ header a {
     background-color: orangered;
     color: white;
     border-radius: 50%;
-    padding: 0.2rem 0.7rem;
-    font-size: 1.4rem;
+    padding: 0.2rem 0.6rem;
+    font-size: 1.6rem;
     position: relative;
     left: -1.5rem;
     top: -0.7rem;
@@ -276,6 +276,7 @@ input {
 }
 
 .checkout-steps > div.active {
-    border-top: orangered;
+    border-top:0.3rem orangered solid;
     color: orangered;
+    font-weight: bold;
 }

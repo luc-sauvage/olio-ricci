@@ -1,4 +1,4 @@
-const { CART_ADD_ITEM, CHANGE_QTY_CART, CART_REMOVE_ITEM } = require("../constants/cartConstants");
+const { CART_ADD_ITEM, CHANGE_QTY_CART, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS } = require("../constants/cartConstants");
 
 export const addToCartReducer = (state = { cart: [] }, action) => {
     switch (action.type) {
@@ -11,14 +11,14 @@ export const addToCartReducer = (state = { cart: [] }, action) => {
             );
             if (found) {
                 item.product = found.product;
-                let newQty = item.qty + found.qty
-                let newCart = cart.map(element => {
+                let newQty = item.qty + found.qty;
+                let newCart = cart.map((element) => {
                     if (element.product._id === found.product._id) {
-                        return { ...element, qty: newQty }
+                        return { ...element, qty: newQty };
                     } else {
                         return element;
                     }
-                })
+                });
                 return {
                     ...state,
                     cart: newCart,
@@ -29,7 +29,7 @@ export const addToCartReducer = (state = { cart: [] }, action) => {
                     cart: [...cart, item],
                 };
             }
-        
+
         case CHANGE_QTY_CART:
             let addedItem = action.payload;
             let modifiedCart = state.cart;
@@ -39,13 +39,13 @@ export const addToCartReducer = (state = { cart: [] }, action) => {
             );
             if (foundInCart) {
                 addedItem.product = foundInCart.product;
-                let newCart = modifiedCart.map(element => {
+                let newCart = modifiedCart.map((element) => {
                     if (element.product._id === foundInCart.product._id) {
-                        return { ...element, qty: addedItem.qty  }
+                        return { ...element, qty: addedItem.qty };
                     } else {
                         return element;
                     }
-                })
+                });
                 return {
                     ...state,
                     cart: newCart,
@@ -57,8 +57,15 @@ export const addToCartReducer = (state = { cart: [] }, action) => {
                 };
             }
 
-        case CART_REMOVE_ITEM: 
-            return {...state, cart: state.cart.filter( element => element.product._id !== action.payload)}
+        case CART_REMOVE_ITEM:
+            return {
+                ...state,
+                cart: state.cart.filter(
+                    (element) => element.product._id !== action.payload
+                ),
+            };
+        case CART_SAVE_SHIPPING_ADDRESS:
+            return { ...state, shippingAddress: action.payload };
         default:
             return state;
     }
