@@ -39,4 +39,25 @@ userRouter.post(
     })
 );
 
+userRouter.post(
+    "/register",
+    expressAsyncHandler(async (req, res) => {
+        const user = new User({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 8),
+        });
+        const createdUser = await user.save();
+        res.send({
+            _id: createdUser.id,
+            firstName: createdUser.firstName,
+            lastName: createdUser.lastName,
+            email: createdUser.email,
+            isAdmin: createdUser.isAdmin,
+            token: generateToken(createdUser),
+        })
+    })
+);
+
 export default userRouter;

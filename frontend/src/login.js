@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { login } from "./actions/userActions";
+import MessageBox from "./components/messagebox";
 
 export default function LogIn(props) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const {lastPage} = useSelector((state) => state.lastPage)
-    console.log(lastPage);
+    const {lastPage} = useSelector((state) => state.lastPage);
 
     const userLogin = useSelector((state) => state.userLogin);
-    const {userInfo} = userLogin;
+    const {userInfo, error} = userLogin;
 
     const dispatch = useDispatch();
 
@@ -34,6 +34,7 @@ export default function LogIn(props) {
                 <div>
                     <h1>Log In</h1>
                 </div>
+                {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <div>
                     <input
                         type="email"
@@ -60,7 +61,7 @@ export default function LogIn(props) {
                 <div>
                     <div className="form-text">
                         Non sei ancora registrato?{" "}
-                        <Link className="form-text-link" to="/register">
+                        <Link className="form-text-link" to="/registration">
                             Crea un account
                         </Link>
                     </div>
