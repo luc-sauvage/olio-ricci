@@ -48,9 +48,9 @@ export default function App() {
                         </a>
                     </div>
                     <div>
-                        <Link to="/">Home</Link>
-                        <Link to="/shop">Negozio</Link>
-                        <Link to="/cart">Carrello</Link>
+                        <Link className="navbar-link" to="/">Home</Link>
+                        <Link className="navbar-link" to="/shop">Negozio</Link>
+                        <Link className="navbar-link" to="/cart">Carrello</Link>
                         {cart.length > 0 && (
                             <span className="badge">{cart.length}</span>
                         )}
@@ -61,11 +61,11 @@ export default function App() {
                                     <i className="fa fa-caret-down right "></i>{" "}
                                 </p>
                                 <ul className="dropdown-content dropdown-off">
-                                    <Link to="/login" onClick={signoutHandler}>Logout</Link>
+                                    <Link className="navbar-link" to="/login" onClick={signoutHandler}>Logout</Link>
                                 </ul>
                             </div>
                         ) : (
-                            <Link to="/login">Login</Link>
+                            <Link className="navbar-link" to="/login">Login</Link>
                         )}
                     </div>
                 </header>

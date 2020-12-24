@@ -60,12 +60,12 @@ li {
     list-style-type: none;
 }
 
-a {
+a.navbar-link {
     text-decoration: none;
     color: white;
 }
 
-a:hover {
+a.navbar-link:hover {
     color: orangered;
 }
 
@@ -277,6 +277,11 @@ input {
 
 .checkout-steps > div.active {
     border-top:0.3rem orangered solid;
-    color: orangered;
     font-weight: bold;
+    color: orangered;
+}
+
+.checkout-nav-link {
+    text-decoration: none;
+    color: inherit;
 }

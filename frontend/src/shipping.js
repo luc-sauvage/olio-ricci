@@ -23,24 +23,14 @@ export default function Shipping(props) {
     const addressData = JSON.parse(localStorage.getItem("shippingAddress"));
 
     useEffect(() => {
-        console.log(
-            "info when mounting",
-            shippingFirstName,
-            shippingLastName,
-            shippingAddress,
-            shippingCity,
-            shippingCAP
-        );
         dispatch(setLastPageAction(redirect));
         if (addressData) {
-            console.log("address data condition");
             setShippingFirstName(addressData.shippingFirstName);
             setShippingLastName(addressData.shippingLastName);
             setShippingAddress(addressData.shippingAddress);
             setShippingCity(addressData.shippingCity);
             setShippingCAP(addressData.shippingCAP);
         } else {
-            console.log("user data condition");
             if (userInfo) {
                 setShippingFirstName(firstName);
                 setShippingLastName(lastName);
