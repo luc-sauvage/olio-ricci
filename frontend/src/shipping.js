@@ -8,17 +8,13 @@ export default function Shipping(props) {
 
     const dispatch = useDispatch();
 
-    const userData = useSelector(state => state.userLogin);
+    const userData = useSelector((state) => state.userLogin);
     const { userInfo } = userData;
     const { firstName, lastName } = userInfo;
 
-
-
     const [shippingFirstName, setShippingFirstName] = useState("");
     const [shippingLastName, setShippingLastName] = useState("");
-    const [shippingAddress, setShippingAddress] = useState(
-        ""
-    );
+    const [shippingAddress, setShippingAddress] = useState("");
     const [shippingCity, setShippingCity] = useState("");
     const [shippingCAP, setShippingCAP] = useState("");
 
@@ -27,29 +23,54 @@ export default function Shipping(props) {
     const addressData = JSON.parse(localStorage.getItem("shippingAddress"));
 
     useEffect(() => {
-        
-        if (userInfo) {
-            setShippingFirstName(firstName);
-            setShippingLastName(lastName);
-            dispatch(setLastPageAction(redirect));
-
-            if (addressData) {
-                setShippingAddress(addressData.shippingAddress);
-                setShippingCity(addressData.shippingCity);
-                setShippingCAP(addressData.shippingCAP);
-            }
-            return;
+        console.log(
+            "info when mounting",
+            shippingFirstName,
+            shippingLastName,
+            shippingAddress,
+            shippingCity,
+            shippingCAP
+        );
+        dispatch(setLastPageAction(redirect));
+        if (addressData) {
+            console.log("address data condition");
+            setShippingFirstName(addressData.shippingFirstName);
+            setShippingLastName(addressData.shippingLastName);
+            setShippingAddress(addressData.shippingAddress);
+            setShippingCity(addressData.shippingCity);
+            setShippingCAP(addressData.shippingCAP);
         } else {
-            props.history.push("/login");
+            console.log("user data condition");
+            if (userInfo) {
+                setShippingFirstName(firstName);
+                setShippingLastName(lastName);
+            } else {
+                props.history.push("/login");
+            }
         }
-
-    }, [dispatch, addressData, firstName, lastName, props.history, redirect, userInfo]);
+    }, []);
 
     
 
-    function submitHandler (event) {
+    function submitHandler(event) {
         event.preventDefault();
-        dispatch(saveShippingAddress({shippingFirstName, shippingLastName, shippingAddress, shippingCity, shippingCAP}));
+        console.log(
+            "info before submit",
+            shippingFirstName,
+            shippingLastName,
+            shippingAddress,
+            shippingCity,
+            shippingCAP
+        );
+        dispatch(
+            saveShippingAddress({
+                shippingFirstName,
+                shippingLastName,
+                shippingAddress,
+                shippingCity,
+                shippingCAP,
+            })
+        );
         props.history.push("/payment");
     }
 
@@ -58,7 +79,7 @@ export default function Shipping(props) {
     return (
         <div>
             <CheckOut step1></CheckOut>
-            <form className="form" onSubmit={submitHandler}>
+            {shippingFirstName && <form className="form" onSubmit={submitHandler}>
                 <div>
                     <h1>Indirizzo di spedizione</h1>
                 </div>
@@ -66,7 +87,7 @@ export default function Shipping(props) {
                     <input
                         type="text"
                         id="first-name"
-                        defaultValue={firstName}
+                        defaultValue={shippingFirstName ? shippingFirstName : firstName}
                         required
                         onChange={(e) => setShippingFirstName(e.target.value)}
                     ></input>
@@ -75,7 +96,7 @@ export default function Shipping(props) {
                     <input
                         type="text"
                         id="last-name"
-                        defaultValue={lastName}
+                        defaultValue={shippingLastName ? shippingLastName : lastName}
                         required
                         onChange={(e) => setShippingLastName(e.target.value)}
                     ></input>
@@ -115,7 +136,7 @@ export default function Shipping(props) {
                         Inserisci dati pagamento
                     </button>
                 </div>
-            </form>
+            </form>}
         </div>
     )
 }
