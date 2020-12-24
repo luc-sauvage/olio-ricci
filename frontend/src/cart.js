@@ -8,7 +8,6 @@ import MessageBox from "./components/messagebox.js";
 export default function Cart(props) {
     const dispatch = useDispatch();
     const productsCart = useSelector((state) => state.productCart);
-    console.log("cart", productsCart);
     const { cart } = productsCart;
 
     

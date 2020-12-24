@@ -12,36 +12,38 @@ export default function Shipping(props) {
     const { userInfo } = userData;
     const { firstName, lastName } = userInfo;
 
-    /* const userAddress = useSelector((state) => state.productCart);
-    console.log("userAddress", userAddress);
-    const { existingShippingAddress } = userAddress;
-    const { address, city, cap } = existingShippingAddress; */
+
 
     const [shippingFirstName, setShippingFirstName] = useState("");
     const [shippingLastName, setShippingLastName] = useState("");
     const [shippingAddress, setShippingAddress] = useState(
-        "Inserisci indirizzo"
+        ""
     );
-    const [shippingCity, setShippingCity] = useState("Inserisci comune");
-    const [shippingCAP, setShippingCAP] = useState("Inserisci CAP");
+    const [shippingCity, setShippingCity] = useState("");
+    const [shippingCAP, setShippingCAP] = useState("");
 
     const redirect = props.location.pathname;
 
+    const addressData = JSON.parse(localStorage.getItem("shippingAddress"));
 
     useEffect(() => {
-
+        
         if (userInfo) {
             setShippingFirstName(firstName);
             setShippingLastName(lastName);
-            /* setShippingAddress(address);
-            setShippingCity(city);
-            setShippingCAP(cap); */
             dispatch(setLastPageAction(redirect));
+
+            if (addressData) {
+                setShippingAddress(addressData.shippingAddress);
+                setShippingCity(addressData.shippingCity);
+                setShippingCAP(addressData.shippingCAP);
+            }
+            return;
         } else {
             props.history.push("/login");
         }
 
-    }, []);
+    }, [dispatch, addressData, firstName, lastName, props.history, redirect, userInfo]);
 
     
 
@@ -82,7 +84,8 @@ export default function Shipping(props) {
                     <input
                         type="text"
                         id="address"
-                        placeholder={shippingAddress}
+                        placeholder="Inserisci indirizzo"
+                        defaultValue={shippingAddress}
                         required
                         onChange={(e) => setShippingAddress(e.target.value)}
                     ></input>
@@ -91,7 +94,8 @@ export default function Shipping(props) {
                     <input
                         type="text"
                         id="city"
-                        placeholder={shippingCity}
+                        placeholder="Inserisci comune"
+                        defaultValue={shippingCity}
                         required
                         onChange={(e) => setShippingCity(e.target.value)}
                     ></input>
@@ -100,7 +104,8 @@ export default function Shipping(props) {
                     <input
                         type="text"
                         id="CAP"
-                        placeholder={shippingCAP}
+                        placeholder="Inserisci CAP"
+                        defaultValue={shippingCAP}
                         required
                         onChange={(e) => setShippingCAP(e.target.value)}
                     ></input>
