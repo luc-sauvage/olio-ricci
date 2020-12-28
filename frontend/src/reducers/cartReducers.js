@@ -1,4 +1,4 @@
-const { CART_ADD_ITEM, CHANGE_QTY_CART, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS } = require("../constants/cartConstants");
+const { CART_ADD_ITEM, CHANGE_QTY_CART, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS, CART_SAVE_PAYMENT_METHOD } = require("../constants/cartConstants");
 
 export const addToCartReducer = (state = { cart: [] }, action) => {
     switch (action.type) {
@@ -66,6 +66,8 @@ export const addToCartReducer = (state = { cart: [] }, action) => {
             };
         case CART_SAVE_SHIPPING_ADDRESS:
             return { ...state, shippingAddress: action.payload };
+        case CART_SAVE_PAYMENT_METHOD:
+            return {...state, paymentMethod: action.payload};
         default:
             return state;
     }

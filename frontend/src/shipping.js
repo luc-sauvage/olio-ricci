@@ -24,7 +24,7 @@ export default function Shipping(props) {
 
     useEffect(() => {
         dispatch(setLastPageAction(redirect));
-        if (addressData) {
+        if (addressData && userInfo) {
             setShippingFirstName(addressData.shippingFirstName);
             setShippingLastName(addressData.shippingLastName);
             setShippingAddress(addressData.shippingAddress);

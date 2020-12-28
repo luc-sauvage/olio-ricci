@@ -8,6 +8,7 @@ import LogIn from "./login";
 import { logout } from "./actions/userActions";
 import Registration from "./registration";
 import Shipping from "./shipping";
+import Payment from "./payment";
 
 export default function App() {
 
@@ -73,6 +74,7 @@ export default function App() {
                     <Route exact path="/shop" component={Shop}></Route>
                     <Route exact path="/cart" component={Cart}></Route>
                     <Route exact path="/shipping" component={Shipping}></Route>
+                    <Route exact path="/payment" component={Payment}></Route>
                     <Route exact path="/login" component={LogIn}></Route>
                     <Route exact path="/registration" component={Registration}></Route>
                     <Route exact path="/" component={Home}></Route>

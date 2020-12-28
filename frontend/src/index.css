@@ -228,6 +228,10 @@ input {
     color: #196c00;
 }
 
+.radio {
+    margin-right: 2rem;
+}
+
 /* dropdown */
 
 .dropdown {
