@@ -123,6 +123,12 @@ header a {
     align-items: flex-start;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .col {
     flex: 1 1 50rem;
 }
@@ -133,6 +139,10 @@ header a {
 
 .min-30 {
     min-width: 30rem;
+}
+
+.min-70 {
+    min-width: 70rem;
 }
 
 .prod-image {
@@ -274,13 +284,13 @@ input {
 
 .checkout-steps > div {
     border-top: 0.3rem #c0c0c0 solid;
-    color:#c0c0c0;
+    color: #c0c0c0;
     flex: 1;
     padding: 1rem;
 }
 
 .checkout-steps > div.active {
-    border-top:0.3rem orangered solid;
+    border-top: 0.3rem orangered solid;
     font-weight: bold;
     color: orangered;
 }
@@ -290,7 +300,3 @@ input {
     color: inherit;
 }
 
-.column {
- display: flex;
- flex-direction: column;
-}
