@@ -9,6 +9,7 @@ import { logout } from "./actions/userActions";
 import Registration from "./registration";
 import Shipping from "./shipping";
 import Payment from "./payment";
+import PlaceOrder from "./placeOrder";
 
 export default function App() {
 
@@ -75,6 +76,7 @@ export default function App() {
                     <Route exact path="/cart" component={Cart}></Route>
                     <Route exact path="/shipping" component={Shipping}></Route>
                     <Route exact path="/payment" component={Payment}></Route>
+                    <Route exact path="/place-order" component={PlaceOrder}></Route>
                     <Route exact path="/login" component={LogIn}></Route>
                     <Route exact path="/registration" component={Registration}></Route>
                     <Route exact path="/" component={Home}></Route>

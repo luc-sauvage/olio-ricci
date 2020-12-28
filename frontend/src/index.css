@@ -289,3 +289,8 @@ input {
     text-decoration: none;
     color: inherit;
 }
+
+.column {
+ display: flex;
+ flex-direction: column;
+}

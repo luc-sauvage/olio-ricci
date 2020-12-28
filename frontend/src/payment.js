@@ -17,13 +17,12 @@ export default function Payment(props) {
     function submitHandler(e) {
         e.preventDefault();
         dispatch(savePaymentMethod(paymentMethod));
-        props.history.push("/placeorder");
+        props.history.push("/place-order");
     }
 
     const addressData = JSON.parse(localStorage.getItem("shippingAddress"));
 
     useEffect(() => {
-        dispatch(setLastPageAction(redirect));
         if (addressData && userInfo) {
             dispatch(setLastPageAction(redirect));
         } else {
