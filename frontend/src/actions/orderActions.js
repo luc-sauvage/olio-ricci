@@ -7,8 +7,6 @@ export const createOrder = (order) => async (dispatch) => {
     console.log("order action runs"); 
     dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
     try {
-        console.log("action about to send order to backend");
-        console.log("logging order", order)
         const { data } = await Axios.post("/api/orders", order);
         console.log("data back from backend", data);
         dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });

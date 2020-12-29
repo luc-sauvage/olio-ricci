@@ -29,8 +29,6 @@ export default function PlaceOrder(props) {
     const { userInfo } = userData; 
     const userId = userInfo._id;
 
-    
-
     const redirect = props.location.pathname;
 
     const createdOrder = useSelector(state => state.createdOrder); 
