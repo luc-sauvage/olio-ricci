@@ -23,7 +23,7 @@ export default function PlaceOrder(props) {
     const paymentMethod = JSON.parse(localStorage.getItem("paymentMethod"));
 
     const productCart = useSelector(state => state.productCart);
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : [] ;
 
     const userData = useSelector((state) => state.userLogin);
     const { userInfo } = userData; 
