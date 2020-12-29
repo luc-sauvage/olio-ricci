@@ -23,7 +23,6 @@ export default function LogIn(props) {
     }
 
     useEffect(() => {
-        console.log(lastPage);
         if (userInfo) {
             props.history.push(`${lastPage}`);
         }

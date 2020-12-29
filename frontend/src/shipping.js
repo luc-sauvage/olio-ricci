@@ -44,14 +44,6 @@ export default function Shipping(props) {
 
     function submitHandler(event) {
         event.preventDefault();
-        console.log(
-            "info before submit",
-            shippingFirstName,
-            shippingLastName,
-            shippingAddress,
-            shippingCity,
-            shippingCAP
-        );
         dispatch(
             saveShippingAddress({
                 shippingFirstName,

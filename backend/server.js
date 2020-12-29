@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/olio-ricci", {
 
 app.use("/api/users", userRouter);
 app.use("/api/prodotti", productRouter);
-app.use("api/orders", orderRouter);
+app.use("/api/orders", orderRouter);
 app.get("/", (req, res) => {
     console.log("test");
     res.send("server is ready");

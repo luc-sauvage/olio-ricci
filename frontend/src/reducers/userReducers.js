@@ -6,7 +6,6 @@ const {
     USER_REGISTRATION_REQUEST,
     USER_REGISTRATION_SUCCESS,
     USER_REGISTRATION_FAIL,
-    
 } = require("../constants/userConstants");
 
 export const userLoginReducer = (state = {}, action) => {

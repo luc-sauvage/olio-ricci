@@ -3,33 +3,46 @@ import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema(
     {
         user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            type: String,
             required: true,
         },
-        orderItems: [
+        ordine: [
             {
-                nome: { type: String, required: true, unique: true },
-                qty: { type: Number, required: true },
-                foto: { type: String, required: true },
-                prezzo: { type: Number, required: true },
+                product: {
+                    _id: { type: String, required: true, unique: true },
+                    nome: { type: String, required: true, unique: true },
+                    prezzo: { type: Number, required: true },
+                    foto: { type: String },
+                },
+                qty: {
+                    type: Number,
+                    required: true,
+                },
             },
         ],
-        shipping: {
+        spedizione: {
             shippingFirstName: { type: String, required: true },
             shippingLastName: { type: String, required: true },
             shippingAddress: { type: String, required: true },
             shippingCity: { type: String, required: true },
-            shippingCap: { type: String, required: true },
+            shippingCAP: { type: String, required: true },
+        }, 
+        metodoPagamento: {
+            type: String,
+            required: true,
         },
-        paymentMethod: { type: String, required: true },
-        subtotalPrice: { type: Number, required: true },
-        shippingPrice: { type: Number, rquired: true },
-        totalPrice: { type: Number, rquired: true },
-        isPaid: { type: Boolean, default: false },
-        paidAt: { type: Date },
-        isShipped: { type: Boolean, default: false },
-        shippedAt: { type: Date },
+        subtotale: {
+            type: Number,
+            required: true,
+        },
+        costiSpedizione: {
+            type: Number,
+            required: true,
+        },
+        totale: {
+            type: Number,
+            required: true,
+        },
     },
     {
         timestamps: true,

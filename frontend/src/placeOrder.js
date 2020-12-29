@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setLastPageAction } from "./actions/navActions";
+import { createOrder } from "./actions/orderActions";
 import CheckOut from "./components/checkout";
+import LoadingBox from "./components/loadingbox";
+import MessageBox from "./components/messagebox";
+import { ORDER_CREATE_RESET } from "./constants/orderConstants";
 
 export default function PlaceOrder(props) {
     const dispatch = useDispatch();
@@ -18,19 +22,30 @@ export default function PlaceOrder(props) {
 
     const paymentMethod = JSON.parse(localStorage.getItem("paymentMethod"));
 
+    const productCart = useSelector(state => state.productCart);
     const cart = JSON.parse(localStorage.getItem("cart"));
 
     const userData = useSelector((state) => state.userLogin);
-    const { userInfo } = userData;
+    const { userInfo } = userData; 
+    const userId = userInfo._id;
+
+    
 
     const redirect = props.location.pathname;
+
+    const createdOrder = useSelector(state => state.createdOrder); 
+    const {loading, success, error, order} = createdOrder; 
 
     const subtotalPrice = cart.reduce((a, c) => a + c.product.prezzo * c.qty, 0);
     const totalQuantity = cart.reduce((a, c) => a + c.qty, 0);
     const shipmentCosts = totalQuantity > 10 ? 0 : (totalQuantity * 2);
+    const totalPrice = subtotalPrice + shipmentCosts; 
+    const price = {subtotalPrice, shipmentCosts, totalPrice}; 
+
+    const orderObject = {userId, productCart, price};
 
     function placeOrderHandler () {
-        // order actions
+        dispatch(createOrder({ order: orderObject}));
     }
 
 
@@ -46,7 +61,11 @@ export default function PlaceOrder(props) {
                 props.history.push("/login");
             }
         }
-    }, []);
+        if (success) {
+            props.history.push(`/order/${order._id}`);
+            dispatch({type: ORDER_CREATE_RESET});
+        }
+    }, [success, props.history, order, dispatch]);
 
     return (
         <div>
@@ -160,7 +179,7 @@ export default function PlaceOrder(props) {
                                     </h3>
                                     <h2>
                                         Totale: €{" "}
-                                        {subtotalPrice + shipmentCosts}
+                                        {totalPrice}
                                     </h2>
                                 </li>
                                 <li>
@@ -172,6 +191,8 @@ export default function PlaceOrder(props) {
                                         Effettua pagamento
                                     </button>
                                 </li>
+                                {loading && <LoadingBox></LoadingBox>}
+                                {error && <MessageBox variant="danger">{error}</MessageBox>}
                             </div>
                         </ul>
                     </div>
