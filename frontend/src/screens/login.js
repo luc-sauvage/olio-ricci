@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { login } from "./actions/userActions";
-import MessageBox from "./components/messagebox";
+import { login } from "../actions/userActions.js";
+import MessageBox from "../components/messagebox";
 
 export default function LogIn(props) {
 

@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
-import Shop from "./shop";
-import Home from "./home";
-import Cart from "./cart";
+import Shop from "./screens/shop";
+import Home from "./screens/home";
+import Cart from "./screens/cart";
 import { useDispatch, useSelector } from "react-redux";
-import LogIn from "./login";
+import LogIn from "./screens/login";
 import { logout } from "./actions/userActions";
-import Registration from "./registration";
-import Shipping from "./shipping";
-import Payment from "./payment";
-import PlaceOrder from "./placeOrder";
+import Registration from "./screens/registration";
+import Shipping from "./screens/shipping";
+import Payment from "./screens/payment";
+import PlaceOrder from "./screens/placeOrder";
 
 export default function App() {
 

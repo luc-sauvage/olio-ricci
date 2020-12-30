@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { changeCartQuantity, removeFromCart } from "./actions/cartActions.js";
-import { setLastPageAction } from "./actions/navActions.js";
-import MessageBox from "./components/messagebox.js";
+import { changeCartQuantity, removeFromCart } from "../actions/cartActions.js";
+import { setLastPageAction } from "../actions/navActions.js";
+import MessageBox from "../components/messagebox.js";
 
 export default function Cart(props) {
     const dispatch = useDispatch();

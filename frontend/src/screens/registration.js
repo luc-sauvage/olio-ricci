@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { registration } from "./actions/userActions";
-import MessageBox from "./components/messagebox";
+import { registration } from "../actions/userActions.js";
+import MessageBox from "../components/messagebox";
 
 export default function Registration(props) {
 

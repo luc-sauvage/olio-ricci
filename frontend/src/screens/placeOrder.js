@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setLastPageAction } from "./actions/navActions";
-import { createOrder } from "./actions/orderActions";
-import CheckOut from "./components/checkout";
-import LoadingBox from "./components/loadingbox";
-import MessageBox from "./components/messagebox";
-import { ORDER_CREATE_RESET } from "./constants/orderConstants";
+import { setLastPageAction } from "../actions/navActions.js";
+import { createOrder } from "../actions/orderActions.js";
+import CheckOut from "../components/checkout";
+import LoadingBox from "../components/loadingbox";
+import MessageBox from "../components/messagebox";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 export default function PlaceOrder(props) {
     const dispatch = useDispatch();
@@ -189,7 +189,7 @@ export default function PlaceOrder(props) {
                                         Effettua pagamento
                                     </button>
                                 </li>
-                                {loading && <LoadingBox></LoadingBox>}
+                                {loading && <LoadingBox>Inserimento ordine in corso...</LoadingBox>}
                                 {error && <MessageBox variant="danger">{error}</MessageBox>}
                             </div>
                         </ul>

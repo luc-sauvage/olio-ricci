@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import LoadingBox from "./components/loadingbox.js";
-import MessageBox from "./components/messagebox.js";
+import LoadingBox from "../components/loadingbox.js";
+import MessageBox from "../components/messagebox.js";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "./actions/productActions.js";
-import Card from "./components/card.js"
-import { setLastPageAction } from "./actions/navActions.js";
+import { listProducts } from "../actions/productActions.js";
+import Card from "../components/card.js"
+import { setLastPageAction } from "../actions/navActions.js";
 
 export default function Shop(props) {
     const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { saveShippingAddress } from './actions/cartActions';
-import { setLastPageAction } from './actions/navActions';
-import CheckOut from './components/checkout'
+import { saveShippingAddress } from '../actions/cartActions.js';
+import { setLastPageAction } from '../actions/navActions.js';
+import CheckOut from '../components/checkout'
 
 export default function Shipping(props) {
 
