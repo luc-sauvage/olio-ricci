@@ -10,6 +10,7 @@ import Registration from "./screens/registration";
 import Shipping from "./screens/shipping";
 import Payment from "./screens/payment";
 import PlaceOrder from "./screens/placeOrder";
+import Order from "./screens/order";
 
 export default function App() {
 
@@ -77,6 +78,7 @@ export default function App() {
                     <Route exact path="/shipping" component={Shipping}></Route>
                     <Route exact path="/payment" component={Payment}></Route>
                     <Route exact path="/place-order" component={PlaceOrder}></Route>
+                    <Route exact path="/order/:id" component={Order}></Route>
                     <Route exact path="/login" component={LogIn}></Route>
                     <Route exact path="/registration" component={Registration}></Route>
                     <Route exact path="/" component={Home}></Route>

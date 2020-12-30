@@ -1,23 +1,37 @@
 import Axios from "axios";
 import { CART_REMOVE_ALL } from "../constants/cartConstants";
-import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from "../constants/orderConstants"
+import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS } from "../constants/orderConstants"
 
 
 export const createOrder = (order) => async (dispatch) => {
-    console.log("order action runs"); 
     dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
     try {
         const { data } = await Axios.post("/api/orders", order);
-        console.log("data back from backend", data);
         dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
         dispatch({type: CART_REMOVE_ALL});
         localStorage.removeItem("cart");
     } catch (error) {
         dispatch({
             type: ORDER_CREATE_FAIL,
-            payload: error.response
+            payload: error.response && error.response.data.message
                 ? error.response.data.message
                 : error.message,
+        });
+    }
+};
+
+export const getOrderDetails = (orderId) => async (dispatch) => {
+    dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
+    try {
+        const { data } = await Axios.get(`/api/orders/${orderId}`);
+        dispatch({type: ORDER_DETAILS_SUCCESS, payload: data}); 
+    } catch (error) {
+        dispatch({
+            type: ORDER_DETAILS_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
         });
     }
 };

@@ -7,7 +7,6 @@ const orderRouter = express.Router();
 orderRouter.post(
     "/",
     expressAsyncHandler(async (req, res) => {
-
         const { userId, productCart, price } = req.body.order;
         const { paymentMethod, shippingAddress, cart } = productCart;
         const { subtotalPrice, shipmentCosts, totalPrice } = price;
@@ -25,7 +24,25 @@ orderRouter.post(
                 totale: totalPrice,
             });
             const createdOrder = await order.save();
-            res.status(201).send({message: "Abbiamo preso in carico il suo ordine", order: createdOrder});
+            res.status(201).send({
+                message: "Abbiamo preso in carico il suo ordine",
+                order: createdOrder,
+            });
+            
+        }
+    })
+);
+
+orderRouter.get(
+    "/:id",
+    expressAsyncHandler(async (req, res) => {
+        console.log("order get route hit!");
+        const order = await Order.findById(req.params.id);
+        if (order) {
+            console.log("order", order)
+            res.send(order);
+        } else {
+            res.status(404).send({ message: "order not found" });
         }
     })
 );
