@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import Axios from "axios";
+import { PayPalButton } from "react-paypal-button-v2";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setLastPageAction } from "../actions/navActions.js";
@@ -22,34 +24,60 @@ export default function PlaceOrder(props) {
 
     const paymentMethod = JSON.parse(localStorage.getItem("paymentMethod"));
 
-    const productCart = useSelector(state => state.productCart);
-    const cart = JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : [] ;
+    const productCart = useSelector((state) => state.productCart);
+    const cart = JSON.parse(localStorage.getItem("cart"))
+        ? JSON.parse(localStorage.getItem("cart"))
+        : [];
 
     const userData = useSelector((state) => state.userLogin);
-    const { userInfo } = userData; 
+    const { userInfo } = userData;
     const userId = userInfo._id;
 
     const redirect = props.location.pathname;
 
-    const createdOrder = useSelector(state => state.createdOrder); 
-    const {loading, success, error, order} = createdOrder; 
+    const createdOrder = useSelector((state) => state.createdOrder);
+    const { loading, success, error, order } = createdOrder;
 
-    const subtotalPrice = cart.reduce((a, c) => a + c.product.prezzo * c.qty, 0);
+    const subtotalPrice = cart.reduce(
+        (a, c) => a + c.product.prezzo * c.qty,
+        0
+    );
     const totalQuantity = cart.reduce((a, c) => a + c.qty, 0);
-    const shipmentCosts = totalQuantity > 10 ? 0 : (totalQuantity * 2);
-    const totalPrice = subtotalPrice + shipmentCosts; 
-    const price = {subtotalPrice, shipmentCosts, totalPrice}; 
+    const shipmentCosts = totalQuantity > 10 ? 0 : totalQuantity * 2;
+    const totalPrice = subtotalPrice + shipmentCosts;
+    const price = { subtotalPrice, shipmentCosts, totalPrice };
 
-    const orderObject = {userId, productCart, price};
+    const orderObject = { userId, productCart, price };
 
-    function placeOrderHandler () {
-        dispatch(createOrder({ order: orderObject}));
+    const [paypalSdkReady, setPaypalSdkReady] = useState(false);
+
+    function placeOrderHandler() {
+        dispatch(createOrder({ order: orderObject }));
     }
 
+    const addPayPalScript = async () => {
+        const { data } = Axios.get("/api/config/paypal");
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = `https://paypal.com/sdk/js?client-id=${data}`;
+        script.async = true;
+        script.onload = () => setPaypalSdkReady(true);
+        document.body.appendChild(script);
+    };
 
     useEffect(() => {
         if (addressData && userInfo && paymentMethod) {
             dispatch(setLastPageAction(redirect));
+            
+            if (paymentMethod === "PayPal") {
+                if (!window.paypal) {
+                    addPayPalScript();
+                } else {
+                    setPaypalSdkReady(true);
+                }
+            } else {
+                // implement stripe
+            }
         } else {
             if (userInfo && addressData) {
                 props.history.push("/payment");
@@ -61,7 +89,7 @@ export default function PlaceOrder(props) {
         }
         if (success) {
             props.history.push(`/order/${order._id}`);
-            dispatch({type: ORDER_CREATE_RESET});
+            dispatch({ type: ORDER_CREATE_RESET });
         }
     }, [success, props.history, order, dispatch]);
 
@@ -175,22 +203,28 @@ export default function PlaceOrder(props) {
                                     <h3>
                                         Spese di spedizione: € {shipmentCosts}
                                     </h3>
-                                    <h2>
-                                        Totale: €{" "}
-                                        {totalPrice}
-                                    </h2>
+                                    <h2>Totale: € {totalPrice}</h2>
                                 </li>
                                 <li>
-                                    <button
+                                    <PayPalButton amount={totalPrice} currency="EUR"></PayPalButton>
+                                    {/* <button
                                         type="button"
                                         onClick={placeOrderHandler}
                                         className="button block"
                                     >
                                         Effettua pagamento
-                                    </button>
+                                    </button> */}
                                 </li>
-                                {loading && <LoadingBox>Inserimento ordine in corso...</LoadingBox>}
-                                {error && <MessageBox variant="danger">{error}</MessageBox>}
+                                {loading && (
+                                    <LoadingBox>
+                                        Inserimento ordine in corso...
+                                    </LoadingBox>
+                                )}
+                                {error && (
+                                    <MessageBox variant="danger">
+                                        {error}
+                                    </MessageBox>
+                                )}
                             </div>
                         </ul>
                     </div>
