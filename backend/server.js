@@ -6,13 +6,6 @@ import dotenv from "dotenv";
 import orderRouter from "./routers/orderRouter.js";
 import paymentRouter from "./routers/paymentRouter.js";
 
-<<<<<<< HEAD
-
-=======
-import Stripe from 'stripe';
-
-const stripe = new Stripe('pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh');
->>>>>>> 0fc2654c34bc7e42288f8b1daa8025f95e31d20f
 
 dotenv.config();
 

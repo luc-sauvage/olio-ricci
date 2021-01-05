@@ -9,12 +9,7 @@ import CheckOut from "../components/checkout";
 import LoadingBox from "../components/loadingbox";
 import MessageBox from "../components/messagebox";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-<<<<<<< HEAD
-const promise = loadStripe("pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh");
-=======
->>>>>>> 0fc2654c34bc7e42288f8b1daa8025f95e31d20f
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 
 export default function PlaceOrder(props) {
@@ -57,6 +52,13 @@ export default function PlaceOrder(props) {
     const orderObject = { userId, productCart, price };
 
     const [paypalSdkReady, setPaypalSdkReady] = useState(false);
+    const [succeeded, setSucceeded] = useState(false);
+    const [stripeError, setStripeError] = useState(null);
+    const [processing, setProcessing] = useState("");
+    const [disabled, setDisabled] = useState(true);
+    const [clientSecret, setClientSecret] = useState("");
+    const stripe = useStripe();
+    const elements = useElements();
 
     /* function placeOrderHandler() {
         dispatch(createOrder({ order: orderObject }));
@@ -68,7 +70,6 @@ export default function PlaceOrder(props) {
 
     const addPayPalScript = async () => {
         const { data } = await Axios.get("/api/config/paypal");
-        console.log(data);
         const script = document.createElement("script");
         script.type = "text/javascript";
         script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=EUR`;
@@ -77,10 +78,39 @@ export default function PlaceOrder(props) {
         document.body.appendChild(script);
     };
 
+    const createStripePayment = async () => {
+        const { data } = await Axios.post("/api/config/stripe", {
+            amount: totalPrice,
+            email: userInfo.email,
+        });
+        console.log("data", data);
+        setClientSecret(data.clientSecret);
+    };
+
+    const handleStripePayment = async (event) => {
+        event.preventDefault();
+        setProcessing(true);
+        const result = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardElement),
+                billing_details: userInfo.email,
+            },
+        });
+
+        if (result.error) {
+            setStripeError(`Payment failed ${result.error.message}`);
+            setProcessing(false);
+        } else {
+            setStripeError(null);
+            setProcessing(false);
+            setSucceeded(true);
+        }
+    };
+
     useEffect(() => {
         if (addressData && userInfo && paymentMethod) {
             dispatch(setLastPageAction(redirect));
-            
+
             if (paymentMethod === "PayPal") {
                 if (!window.paypal) {
                     addPayPalScript();
@@ -88,7 +118,7 @@ export default function PlaceOrder(props) {
                     setPaypalSdkReady(true);
                 }
             } else {
-                // implement stripe
+                createStripePayment();
             }
         } else {
             if (userInfo && addressData) {
@@ -217,13 +247,27 @@ export default function PlaceOrder(props) {
                                     </h3>
                                     <h2>Totale: € {totalPrice}</h2>
                                 </li>
-                                <li>{!paypalSdkReady && <LoadingBox></LoadingBox>}
-                                    {paypalSdkReady && <PayPalButton
-                                        amount={totalPrice}
-                                        currency="EUR"
-                                        onSuccess={successPaymentHandler}
-                                    ></PayPalButton>}
-                                    
+                                <li>
+                                    {!paypalSdkReady && (
+                                        <LoadingBox></LoadingBox>
+                                    )}
+                                    {paypalSdkReady && (
+                                        <PayPalButton
+                                            amount={totalPrice}
+                                            currency="EUR"
+                                            onSuccess={successPaymentHandler}
+                                        ></PayPalButton>
+                                    )}
+
+                                    {clientSecret && (
+                                        <button
+                                            type="button"
+                                            onClick={handleStripePayment}
+                                            className="button block"
+                                        >
+                                            Effettua pagamento con Stripe
+                                        </button>
+                                    )}
                                     {/* <button
                                         type="button"
                                         onClick={placeOrderHandler}

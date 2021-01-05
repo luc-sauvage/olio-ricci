@@ -11,6 +11,12 @@ import Shipping from "./screens/shipping";
 import Payment from "./screens/payment";
 import PlaceOrder from "./screens/placeOrder";
 import Order from "./screens/order";
+import { loadStripe } from "@stripe/stripe-js"
+import { Elements } from "@stripe/react-stripe-js";
+const promise = loadStripe(
+    "pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh"
+);
+
 
 export default function App() {
 
@@ -77,7 +83,9 @@ export default function App() {
                     <Route exact path="/cart" component={Cart}></Route>
                     <Route exact path="/shipping" component={Shipping}></Route>
                     <Route exact path="/payment" component={Payment}></Route>
+                    <Elements stripe={promise}>
                     <Route exact path="/place-order" component={PlaceOrder}></Route>
+                    </Elements>
                     <Route exact path="/order/:id" component={Order}></Route>
                     <Route exact path="/login" component={LogIn}></Route>
                     <Route exact path="/registration" component={Registration}></Route>
