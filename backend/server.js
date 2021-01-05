@@ -4,6 +4,9 @@ import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
 import dotenv from "dotenv";
 import orderRouter from "./routers/orderRouter.js";
+import paymentRouter from "./routers/paymentRouter.js";
+
+
 
 dotenv.config();
 
@@ -22,9 +25,20 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/olio-ricci", {
 app.use("/api/users", userRouter);
 app.use("/api/prodotti", productRouter);
 app.use("/api/orders", orderRouter);
-app.get("/api/config/paypal", (req, res) => {
+app.use("/api/config", paymentRouter);
+/* app.get("/api/config/paypal", (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
+app.post("api/config/stripe", async (req, res) => {
+    const { items } = req.body;
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: calculateOrderAmount(items),
+        currency: "eur"
+      });
+      res.send({
+        clientSecret: paymentIntent.client_secret
+      });
+}); */
 app.get("/", (req, res) => {
     console.log("test");
     res.send("server is ready");

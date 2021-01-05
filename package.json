@@ -27,7 +27,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8",
     "nodemon": "^2.0.6",
-    "react-router": "^5.2.0"
+    "react-router": "^5.2.0",
+    "stripe": "^8.129.0"
   },
   "devDependencies": {
     "eslint": "^7.14.0",

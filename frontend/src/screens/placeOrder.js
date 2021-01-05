@@ -9,6 +9,10 @@ import CheckOut from "../components/checkout";
 import LoadingBox from "../components/loadingbox";
 import MessageBox from "../components/messagebox";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+const promise = loadStripe("pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh");
+
 
 export default function PlaceOrder(props) {
     const dispatch = useDispatch();
@@ -210,12 +214,13 @@ export default function PlaceOrder(props) {
                                     </h3>
                                     <h2>Totale: € {totalPrice}</h2>
                                 </li>
-                                <li>
+                                <li>{!paypalSdkReady && <LoadingBox></LoadingBox>}
                                     {paypalSdkReady && <PayPalButton
                                         amount={totalPrice}
                                         currency="EUR"
                                         onSuccess={successPaymentHandler}
                                     ></PayPalButton>}
+                                    
                                     {/* <button
                                         type="button"
                                         onClick={placeOrderHandler}
