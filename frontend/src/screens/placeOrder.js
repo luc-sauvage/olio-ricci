@@ -51,29 +51,35 @@ export default function PlaceOrder(props) {
 
     const [paypalSdkReady, setPaypalSdkReady] = useState(false);
 
-    function placeOrderHandler() {
+    /* function placeOrderHandler() {
+        dispatch(createOrder({ order: orderObject }));
+    } */
+
+    function successPaymentHandler() {
         dispatch(createOrder({ order: orderObject }));
     }
+
+    const addPayPalScript = async () => {
+        const { data } = await Axios.get("/api/config/paypal");
+        console.log(data);
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=EUR`;
+        script.async = true;
+        script.onload = () => setPaypalSdkReady(true);
+        document.body.appendChild(script);
+    };
 
     useEffect(() => {
         if (addressData && userInfo && paymentMethod) {
             dispatch(setLastPageAction(redirect));
-            const addPayPalScript = async () => {
-                const { data } = await Axios.get("/api/config/paypal");
-                console.log(data);
-                const script = document.createElement("script");
-                script.type = "text/javascript";
-                script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=EUR`;
-                script.async = true;
-                script.onload = () => setPaypalSdkReady(true);
-                document.body.appendChild(script);
-            };
+            
             if (paymentMethod === "PayPal") {
-                /* if (!window.paypal) { */
+                if (!window.paypal) {
                     addPayPalScript();
-                /* } else {
+                } else {
                     setPaypalSdkReady(true);
-                } */
+                }
             } else {
                 // implement stripe
             }
@@ -205,10 +211,11 @@ export default function PlaceOrder(props) {
                                     <h2>Totale: € {totalPrice}</h2>
                                 </li>
                                 <li>
-                                    <PayPalButton
+                                    {paypalSdkReady && <PayPalButton
                                         amount={totalPrice}
                                         currency="EUR"
-                                    ></PayPalButton>
+                                        onSuccess={successPaymentHandler}
+                                    ></PayPalButton>}
                                     {/* <button
                                         type="button"
                                         onClick={placeOrderHandler}
