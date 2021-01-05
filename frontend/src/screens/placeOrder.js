@@ -55,26 +55,25 @@ export default function PlaceOrder(props) {
         dispatch(createOrder({ order: orderObject }));
     }
 
-    const addPayPalScript = async () => {
-        const { data } = Axios.get("/api/config/paypal");
-        const script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = `https://paypal.com/sdk/js?client-id=${data}`;
-        script.async = true;
-        script.onload = () => setPaypalSdkReady(true);
-        document.body.appendChild(script);
-    };
-
     useEffect(() => {
         if (addressData && userInfo && paymentMethod) {
             dispatch(setLastPageAction(redirect));
-            
+            const addPayPalScript = async () => {
+                const { data } = await Axios.get("/api/config/paypal");
+                console.log(data);
+                const script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=EUR`;
+                script.async = true;
+                script.onload = () => setPaypalSdkReady(true);
+                document.body.appendChild(script);
+            };
             if (paymentMethod === "PayPal") {
-                if (!window.paypal) {
+                /* if (!window.paypal) { */
                     addPayPalScript();
-                } else {
+                /* } else {
                     setPaypalSdkReady(true);
-                }
+                } */
             } else {
                 // implement stripe
             }
@@ -206,7 +205,10 @@ export default function PlaceOrder(props) {
                                     <h2>Totale: € {totalPrice}</h2>
                                 </li>
                                 <li>
-                                    <PayPalButton amount={totalPrice} currency="EUR"></PayPalButton>
+                                    <PayPalButton
+                                        amount={totalPrice}
+                                        currency="EUR"
+                                    ></PayPalButton>
                                     {/* <button
                                         type="button"
                                         onClick={placeOrderHandler}
