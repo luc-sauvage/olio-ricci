@@ -11,7 +11,10 @@ import MessageBox from "../components/messagebox";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+<<<<<<< HEAD
 const promise = loadStripe("pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh");
+=======
+>>>>>>> 0fc2654c34bc7e42288f8b1daa8025f95e31d20f
 
 
 export default function PlaceOrder(props) {
