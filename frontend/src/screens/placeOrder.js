@@ -69,6 +69,7 @@ export default function PlaceOrder(props) {
 
     function successPaymentHandler() {
         dispatch(createOrder({ order: orderObject }));
+        setSucceeded(false);
     }
 
     const addPayPalScript = async () => {
@@ -92,15 +93,21 @@ export default function PlaceOrder(props) {
         setLoadingStripe(false);
     };
 
+    const handleStripeCardChange = async (event) => {    
+        setDisabled(event.empty);
+        setStripeError(event.error ? event.error.message : "");
+      };
+
     const handleStripePayment = async (event) => {
         event.preventDefault();
         setProcessing(true);
+        console.log("processing:", processing);
         const result = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
-                billing_details: userInfo.email,
-            },
+            }
         });
+        console.log("result", result);
 
         if (result.error) {
             setStripeError(`Payment failed ${result.error.message}`);
@@ -137,11 +144,15 @@ export default function PlaceOrder(props) {
                 props.history.push("/login");
             }
         }
+        if (succeeded) {
+            successPaymentHandler();
+        }
         if (success) {
             props.history.push(`/order/${order._id}`);
             dispatch({ type: ORDER_CREATE_RESET });
         }
-    }, [success, props.history, order, dispatch]);
+        
+    }, [success, succeeded, props.history, order, dispatch]);
 
     return (
         <div>
@@ -266,13 +277,44 @@ export default function PlaceOrder(props) {
                                     )}
                                     {loadingStripe && <LoadingBox></LoadingBox>}
                                     {clientSecret && (
-                                        <button
-                                            type="button"
-                                            onClick={handleStripePayment}
-                                            className="button block"
+                                        <form
+                                            id="payment-form"
+                                            className="stripe-form"
                                         >
-                                            Effettua pagamento con Stripe
-                                        </button>
+                                            <CardElement
+                                                id="card-element"
+                                                onChange={
+                                                    handleStripeCardChange
+                                                }
+                                            ></CardElement>
+                                            <button
+                                                disabled={
+                                                    processing ||
+                                                    disabled ||
+                                                    succeeded
+                                                }
+                                                id="submit"
+                                                type="button"
+                                                className="button block"
+                                                onClick={handleStripePayment}
+                                            >
+                                                Paga con Stripe
+                                            </button>
+                                            {stripeError && (
+                                                <div
+                                                    className="card-error"
+                                                    role="alert"
+                                                >
+                                                    {stripeError}
+                                                </div>
+                                            )}
+                                            {processing && (
+                                                <LoadingBox>
+                                                    Inserimento ordine in
+                                                    corso...
+                                                </LoadingBox>
+                                            )}
+                                        </form>
                                     )}
                                 </li>
                                 {loading && (
