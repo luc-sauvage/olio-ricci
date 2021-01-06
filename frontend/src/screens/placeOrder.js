@@ -51,7 +51,10 @@ export default function PlaceOrder(props) {
 
     const orderObject = { userId, productCart, price };
 
+    const [loadingPaypal, setLoadingPaypal] = useState(false);
     const [paypalSdkReady, setPaypalSdkReady] = useState(false);
+    
+    const [loadingStripe, setLoadingStripe] = useState(false);
     const [succeeded, setSucceeded] = useState(false);
     const [stripeError, setStripeError] = useState(null);
     const [processing, setProcessing] = useState("");
@@ -75,6 +78,7 @@ export default function PlaceOrder(props) {
         script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=EUR`;
         script.async = true;
         script.onload = () => setPaypalSdkReady(true);
+        setLoadingPaypal(false);
         document.body.appendChild(script);
     };
 
@@ -85,6 +89,7 @@ export default function PlaceOrder(props) {
         });
         console.log("data", data);
         setClientSecret(data.clientSecret);
+        setLoadingStripe(false);
     };
 
     const handleStripePayment = async (event) => {
@@ -112,12 +117,15 @@ export default function PlaceOrder(props) {
             dispatch(setLastPageAction(redirect));
 
             if (paymentMethod === "PayPal") {
+                setLoadingPaypal(true);
                 if (!window.paypal) {
                     addPayPalScript();
                 } else {
                     setPaypalSdkReady(true);
+                    setLoadingPaypal(false);
                 }
             } else {
+                setLoadingStripe(true);
                 createStripePayment();
             }
         } else {
@@ -248,9 +256,7 @@ export default function PlaceOrder(props) {
                                     <h2>Totale: € {totalPrice}</h2>
                                 </li>
                                 <li>
-                                    {!paypalSdkReady && (
-                                        <LoadingBox></LoadingBox>
-                                    )}
+                                    {loadingPaypal && <LoadingBox></LoadingBox>}
                                     {paypalSdkReady && (
                                         <PayPalButton
                                             amount={totalPrice}
@@ -258,7 +264,7 @@ export default function PlaceOrder(props) {
                                             onSuccess={successPaymentHandler}
                                         ></PayPalButton>
                                     )}
-
+                                    {loadingStripe && <LoadingBox></LoadingBox>}
                                     {clientSecret && (
                                         <button
                                             type="button"
@@ -268,13 +274,6 @@ export default function PlaceOrder(props) {
                                             Effettua pagamento con Stripe
                                         </button>
                                     )}
-                                    {/* <button
-                                        type="button"
-                                        onClick={placeOrderHandler}
-                                        className="button block"
-                                    >
-                                        Effettua pagamento
-                                    </button> */}
                                 </li>
                                 {loading && (
                                     <LoadingBox>

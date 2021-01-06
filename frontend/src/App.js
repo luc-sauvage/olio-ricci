@@ -57,9 +57,15 @@ export default function App() {
                         </a>
                     </div>
                     <div>
-                        <Link className="navbar-link" to="/">Home</Link>
-                        <Link className="navbar-link" to="/shop">Negozio</Link>
-                        <Link className="navbar-link" to="/cart">Carrello</Link>
+                        <Link className="navbar-link" to="/">
+                            Home
+                        </Link>
+                        <Link className="navbar-link" to="/shop">
+                            Negozio
+                        </Link>
+                        <Link className="navbar-link" to="/cart">
+                            Carrello
+                        </Link>
                         {cart.length > 0 && (
                             <span className="badge">{cart.length}</span>
                         )}
@@ -70,11 +76,19 @@ export default function App() {
                                     <i className="fa fa-caret-down right "></i>{" "}
                                 </p>
                                 <ul className="dropdown-content dropdown-off">
-                                    <Link className="navbar-link" to="/login" onClick={signoutHandler}>Logout</Link>
+                                    <Link
+                                        className="navbar-link"
+                                        to="/login"
+                                        onClick={signoutHandler}
+                                    >
+                                        Logout
+                                    </Link>
                                 </ul>
                             </div>
                         ) : (
-                            <Link className="navbar-link" to="/login">Login</Link>
+                            <Link className="navbar-link" to="/login">
+                                Login
+                            </Link>
                         )}
                     </div>
                 </header>
@@ -84,11 +98,19 @@ export default function App() {
                     <Route exact path="/shipping" component={Shipping}></Route>
                     <Route exact path="/payment" component={Payment}></Route>
                     <Elements stripe={promise}>
-                    <Route exact path="/place-order" component={PlaceOrder}></Route>
+                        <Route
+                            exact
+                            path="/place-order"
+                            component={PlaceOrder}
+                        ></Route>
                     </Elements>
                     <Route exact path="/order/:id" component={Order}></Route>
                     <Route exact path="/login" component={LogIn}></Route>
-                    <Route exact path="/registration" component={Registration}></Route>
+                    <Route
+                        exact
+                        path="/registration"
+                        component={Registration}
+                    ></Route>
                     <Route exact path="/" component={Home}></Route>
                 </main>
                 <footer className="row centered">
