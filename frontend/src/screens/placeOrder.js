@@ -63,9 +63,6 @@ export default function PlaceOrder(props) {
     const stripe = useStripe();
     const elements = useElements();
 
-    /* function placeOrderHandler() {
-        dispatch(createOrder({ order: orderObject }));
-    } */
 
     function successPaymentHandler() {
         dispatch(createOrder({ order: orderObject }));
@@ -101,7 +98,6 @@ export default function PlaceOrder(props) {
     const handleStripePayment = async (event) => {
         event.preventDefault();
         setProcessing(true);
-        console.log("processing:", processing);
         const result = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
