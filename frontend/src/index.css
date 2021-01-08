@@ -355,3 +355,23 @@ input {
         width: 80vw;
     }
 }
+
+/* table */
+
+.table {
+    width: 100%; 
+    border-collapse: collapse;
+}
+
+
+.table tbody tr:nth-of-type(odd) {
+    background-color: #c0c0c0;
+}
+
+.table td, .table th {
+    text-align: left;
+    max-width: 20vw;
+    padding: 0.5rem;
+}
+
+

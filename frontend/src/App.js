@@ -14,6 +14,7 @@ import Order from "./screens/order";
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js";
 import OrderHistory from "./screens/orderHistory";
+import Profile from "./screens/profile";
 const promise = loadStripe(
     "pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh"
 );
@@ -77,6 +78,14 @@ export default function App() {
                                     <i className="fa fa-caret-down right "></i>{" "}
                                 </p>
                                 <ul className="dropdown-content dropdown-off">
+                                <li>
+                                        <Link
+                                            className="navbar-link"
+                                            to="/user-profile"
+                                        >
+                                            Il tuo profilo
+                                        </Link>
+                                    </li>
                                     <li>
                                         <Link
                                             className="navbar-link"
@@ -126,6 +135,11 @@ export default function App() {
                         exact
                         path="/registration"
                         component={Registration}
+                    ></Route>
+                    <Route
+                        exact
+                        path="/user-profile"
+                        component={Profile}
                     ></Route>
                     <Route exact path="/" component={Home}></Route>
                 </main>

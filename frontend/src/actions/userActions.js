@@ -1,5 +1,16 @@
 import Axios from "axios";
-import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTRATION_FAIL, USER_REGISTRATION_REQUEST, USER_REGISTRATION_SUCCESS,  } from "../constants/userConstants";
+import {
+    USER_LOGIN_FAIL,
+    USER_LOGIN_REQUEST,
+    USER_LOGIN_SUCCESS,
+    USER_LOGOUT,
+    USER_REGISTRATION_FAIL,
+    USER_REGISTRATION_REQUEST,
+    USER_REGISTRATION_SUCCESS,
+    USER_PROFILE_REQUEST,
+    USER_PROFILE_SUCCESS,
+    USER_PROFILE_FAIL,
+} from "../constants/userConstants";
 
 export const login = (email, password) => async (dispatch) => {
     dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } });
@@ -21,8 +32,13 @@ export const login = (email, password) => async (dispatch) => {
     }
 };
 
-export const registration = (firstName, lastName, email, password) => async (dispatch) => {
-    dispatch({ type: USER_REGISTRATION_REQUEST, payload: { firstName, lastName, email, password } });
+export const registration = (firstName, lastName, email, password) => async (
+    dispatch
+) => {
+    dispatch({
+        type: USER_REGISTRATION_REQUEST,
+        payload: { firstName, lastName, email, password },
+    });
     try {
         const { data } = await Axios.post("/api/users/register", {
             firstName,
@@ -47,4 +63,20 @@ export const registration = (firstName, lastName, email, password) => async (dis
 export const logout = () => (dispatch) => {
     localStorage.removeItem("userData");
     dispatch({ type: USER_LOGOUT });
+};
+
+export const getUserProfile = (userId) => async (dispatch) => {
+    dispatch({ type: USER_PROFILE_REQUEST, payload: userId });
+    try {
+        const {data} = await Axios.get(`api/users/${userId}`);
+        dispatch({type: USER_PROFILE_SUCCESS, payload: data});
+    } catch (error) {
+        dispatch({
+            type: USER_PROFILE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
 };

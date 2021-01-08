@@ -11,11 +11,19 @@ userRouter.get(
     "/seed",
     expressAsyncHandler(async (req, res) => {
         console.log("seed route is hit");
-        /* await User.deleteMany({}); */
         const createdUsers = await User.insertMany(data.users);
         res.send({ createdUsers });
     })
 );
+
+userRouter.get("/:userId", expressAsyncHandler( async (req, res) => {
+    const user = await User.findById(req.params.userId);
+    if (user) {
+        res.send(user);
+    } else {
+        res.status(404).send({message: "profilo non trovato"});
+    }
+}));
 
 userRouter.post(
     "/login",

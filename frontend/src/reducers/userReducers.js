@@ -6,6 +6,9 @@ const {
     USER_REGISTRATION_REQUEST,
     USER_REGISTRATION_SUCCESS,
     USER_REGISTRATION_FAIL,
+    USER_PROFILE_REQUEST,
+    USER_PROFILE_SUCCESS,
+    USER_PROFILE_FAIL,
 } = require("../constants/userConstants");
 
 export const userLoginReducer = (state = {}, action) => {
@@ -35,5 +38,18 @@ export const userRegistrationReducer = (state = {}, action) => {
             return {};
         default:
             return state;
+    }
+};
+
+export const getUserProfileReducer = (state = { loading: true}, action) => {
+    switch (action.type) {
+        case USER_PROFILE_REQUEST: 
+        return {loading: true};
+        case USER_PROFILE_SUCCESS: 
+        return { loading: false, user: action.payload};
+        case USER_PROFILE_FAIL:
+            return {loading: false, error: action.payload};
+        default: 
+            return state; 
     }
 };
