@@ -13,6 +13,7 @@ import PlaceOrder from "./screens/placeOrder";
 import Order from "./screens/order";
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js";
+import OrderHistory from "./screens/orderHistory";
 const promise = loadStripe(
     "pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh"
 );
@@ -76,13 +77,23 @@ export default function App() {
                                     <i className="fa fa-caret-down right "></i>{" "}
                                 </p>
                                 <ul className="dropdown-content dropdown-off">
-                                    <Link
-                                        className="navbar-link"
-                                        to="/login"
-                                        onClick={signoutHandler}
-                                    >
-                                        Logout
-                                    </Link>
+                                    <li>
+                                        <Link
+                                            className="navbar-link"
+                                            to="/orderhistory"
+                                        >
+                                            I tuoi ordini
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            className="navbar-link"
+                                            to="/login"
+                                            onClick={signoutHandler}
+                                        >
+                                            Logout
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                         ) : (
@@ -105,6 +116,11 @@ export default function App() {
                         ></Route>
                     </Elements>
                     <Route exact path="/order/:id" component={Order}></Route>
+                    <Route
+                        exact
+                        path="/orderhistory"
+                        component={OrderHistory}
+                    ></Route>
                     <Route exact path="/login" component={LogIn}></Route>
                     <Route
                         exact

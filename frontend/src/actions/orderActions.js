@@ -36,10 +36,10 @@ export const getOrderDetails = (orderId) => async (dispatch) => {
     }
 };
 
-export const getOrderList = () => async (dispatch) => {
+export const getOrderList = (userId) => async (dispatch) => {
     dispatch({ type: ORDER_LIST_REQUEST });
     try {
-        const {data} = await Axios.get("/api/orders/history");
+        const {data} = await Axios.get(`/api/orders/history/${userId}`);
         dispatch({type: ORDER_LIST_SUCCESS, payload: data});
     } catch (error) {
         dispatch({

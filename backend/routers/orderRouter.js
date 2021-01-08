@@ -33,10 +33,14 @@ orderRouter.post(
     })
 );
 
+orderRouter.get("/history/:userId", expressAsyncHandler (async (req, res) => {
+    const orders = await Order.find({user: req.params.userId});
+    res.send(orders);
+}))
+
 orderRouter.get(
     "/:id",
     expressAsyncHandler(async (req, res) => {
-        console.log("order get route hit!");
         const order = await Order.findById(req.params.id);
         if (order) {
             console.log("order", order)
@@ -46,5 +50,7 @@ orderRouter.get(
         }
     })
 );
+
+
 
 export default orderRouter;
