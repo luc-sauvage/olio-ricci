@@ -3,7 +3,7 @@ import { addToCartReducer } from "./reducers/cartReducers";
 import { setLastPageReducer } from "./reducers/navReducers";
 import { createOrderReducer, getOrderDetailsReducer, getOrderListReducer } from "./reducers/orderReducers";
 import { productListReducer } from "./reducers/productReducers";
-import { getUserProfileReducer, userLoginReducer, userRegistrationReducer } from "./reducers/userReducers";
+import { getUserProfileReducer, updateUserProfileReducer, userLoginReducer, userRegistrationReducer } from "./reducers/userReducers";
 const {
     createStore,
     compose,
@@ -37,7 +37,8 @@ const reducer = combineReducers({
     createdOrder: createOrderReducer,
     orderDetails: getOrderDetailsReducer,
     ordersList: getOrderListReducer,
-    userProfile: getUserProfileReducer
+    userProfile: getUserProfileReducer,
+    userProfileUpdate: updateUserProfileReducer
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

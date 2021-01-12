@@ -25,19 +25,7 @@ app.use("/api/users", userRouter);
 app.use("/api/prodotti", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/config", paymentRouter);
-/* app.get("/api/config/paypal", (req, res) => {
-    res.send(process.env.PAYPAL_CLIENT_ID || "sb");
-});
-app.post("api/config/stripe", async (req, res) => {
-    const { items } = req.body;
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: calculateOrderAmount(items),
-        currency: "eur"
-      });
-      res.send({
-        clientSecret: paymentIntent.client_secret
-      });
-}); */
+
 app.get("/", (req, res) => {
     console.log("test");
     res.send("server is ready");

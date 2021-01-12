@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfile } from '../actions/userActions';
+import { getUserProfile, updateUserProfile } from '../actions/userActions';
 import LoadingBox from '../components/loadingbox';
 import MessageBox from '../components/messagebox';
 
@@ -12,6 +12,7 @@ export default function Profile() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
+    const [formError, setFormError] = useState(false);
 
     const userData = useSelector((state) => state.userLogin);
     const { userInfo } = userData;
@@ -21,9 +22,24 @@ export default function Profile() {
     console.log("userProfile", userProfile);
     const { loading, error, user } = userProfile;
 
-    function submitHandler (event) {
+    const userProfileUpdate = useSelector((state) => state.userProfileUpdate);
+    const { success: successUpdate, error: errorUpdate, loading: loadingUpdate } = userProfileUpdate;
+
+    function submitHandler(event) {
         event.preventDefault();
-        /* dispatch new user data */
+        if (password !== confirmedPassword) {
+            setFormError(true);
+        } else {
+            dispatch(
+                updateUserProfile({
+                    userId: user._id,
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                })
+            );
+        }
     }
 
     useEffect(() => {
@@ -46,7 +62,7 @@ export default function Profile() {
                             <input
                                 type="text"
                                 id="first-name"
-                                defaultValue={user.firstName}
+                                defaultValue={firstName ? firstName : user.firstName}
                                 required
                                 onChange={(e) => setFirstName(e.target.value)}
                             ></input>
@@ -55,7 +71,7 @@ export default function Profile() {
                             <input
                                 type="text"
                                 id="last-name"
-                                defaultValue={user.lastName}
+                                defaultValue={lastName ? lastName : user.lastName}
                                 required
                                 onChange={(e) => setLastName(e.target.value)}
                             ></input>
@@ -92,6 +108,10 @@ export default function Profile() {
                         <div>
                             <button className="button" type="submit">Aggiorna i tuoi dati</button>
                         </div>
+                        {formError && <MessageBox variant="danger">ATTENZIONE! Le password non coincidono!</MessageBox>}
+                        {loadingUpdate && <LoadingBox></LoadingBox>}
+                        {successUpdate && <MessageBox variant="success">Il tuo profilo è stato aggiornato con successo!</MessageBox>}
+                        {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
                     </>
                 )}
             </form>

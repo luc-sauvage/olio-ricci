@@ -1,11 +1,19 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
-import data from "../data.js";
 import User from "../models/userModel.js";
 import { generateToken } from "../utils.js";
 
 const userRouter = express.Router();
+
+userRouter.get("/:userId", expressAsyncHandler( async (req, res) => {
+    const user = await User.findById(req.params.userId);
+    if (user) {
+        res.send(user);
+    } else {
+        res.status(404).send({message: "profilo non trovato"});
+    }
+}));
 
 userRouter.get(
     "/seed",
@@ -16,14 +24,10 @@ userRouter.get(
     })
 );
 
-userRouter.get("/:userId", expressAsyncHandler( async (req, res) => {
-    const user = await User.findById(req.params.userId);
-    if (user) {
-        res.send(user);
-    } else {
-        res.status(404).send({message: "profilo non trovato"});
-    }
-}));
+userRouter.put("/update-profile", expressAsyncHandler (async (req,res) =>{
+    console.log("req.body for put route", req.body);
+}))
+
 
 userRouter.post(
     "/login",

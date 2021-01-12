@@ -14,6 +14,7 @@ orderRouter.post(
         if (req.body.orderItems === 0) {
             res.status(400).send({ message: "Il carrello è vuoto" });
         } else {
+            try {
             const order = new Order({
                 user: userId,
                 ordine: cart,
@@ -28,6 +29,9 @@ orderRouter.post(
                 message: "Abbiamo preso in carico il suo ordine",
                 order: createdOrder,
             });
+        } catch (error) {
+            res.send(error);
+        } 
             
         }
     })
