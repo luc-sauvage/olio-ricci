@@ -44,7 +44,7 @@ export default function App() {
                 arrow.classList.toggle("down");
             });
         }
-    }, [userInfo]);
+    }, []);
 
     return (
         <BrowserRouter>

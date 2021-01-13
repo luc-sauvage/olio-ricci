@@ -62,7 +62,7 @@ export default function Profile() {
             <form className="form" onSubmit={submitHandler}>
                 <div>
                     {userProfile && user && (
-                        <h1>Ciao {user.firstName}, ecco il tuo profilo</h1>
+                        <h1>Il tuo profilo</h1>
                     )}
                 </div>
                 {loading ? (

@@ -29,9 +29,7 @@ userRouter.get(
 userRouter.put(
     "/update-profile",
     expressAsyncHandler(async (req, res) => {
-        console.log("req.body for put route", req.body);
         const user = await User.findById(req.body.userId);
-        console.log("user object from database", user);
         if (user) {
             user.firstName = req.body.firstName;
             user.lastName = req.body.lastName;
@@ -40,7 +38,6 @@ userRouter.put(
                 user.password = bcrypt.hashSync(req.body.password, 8);
             }
             const updatedUser = await user.save();
-            console.log("saved successfully", updatedUser);
             res.send({
                 _id: updatedUser._id,
                 firstName: updatedUser.firstName,
