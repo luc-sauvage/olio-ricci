@@ -73,6 +73,7 @@ export const getUserProfile = (userId) => async (dispatch) => {
     try {
         const {data} = await Axios.get(`api/users/${userId}`);
         dispatch({type: USER_PROFILE_SUCCESS, payload: data});
+        console.log("dispatched!");
     } catch (error) {
         dispatch({
             type: USER_PROFILE_FAIL,
@@ -87,11 +88,10 @@ export const getUserProfile = (userId) => async (dispatch) => {
 export const updateUserProfile = (user) => async (dispatch) => {
     dispatch({ type: USER_PROFILE_UPDATE_REQUEST, payload: user });
     try {
-        console.log("action is reached");
         const { data } = await Axios.put(`api/users/update-profile`, user);
         dispatch({ type: USER_PROFILE_UPDATE_SUCCESS, payload: data });
-        /* dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-        localStorage.setItem("userData", JSON.stringify(data)); */
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+        localStorage.setItem("userData", JSON.stringify(data));
     } catch (error) {
         dispatch({
             type: USER_PROFILE_UPDATE_FAIL,

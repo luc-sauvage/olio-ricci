@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile, updateUserProfile } from '../actions/userActions';
 import LoadingBox from '../components/loadingbox';
 import MessageBox from '../components/messagebox';
+import { USER_PROFILE_UPDATE_RESET } from '../constants/userConstants';
+
 
 export default function Profile() {
     const dispatch = useDispatch();
@@ -19,7 +21,6 @@ export default function Profile() {
     const userId = userInfo._id;
 
     const userProfile = useSelector((state) => state.userProfile);
-    console.log("userProfile", userProfile);
     const { loading, error, user } = userProfile;
 
     const userProfileUpdate = useSelector((state) => state.userProfileUpdate);
@@ -43,76 +44,110 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        dispatch(getUserProfile(userId));
-    }, [dispatch, userId]);
+        dispatch({type: USER_PROFILE_UPDATE_RESET});
+        if (!user) {
+            setFirstName(userInfo.firstName);
+            setLastName(userInfo.lastName);
+            setEmail(userInfo.email)
+            dispatch(getUserProfile(userId));
+        } else {
+            setFirstName(user.firstName);
+            setLastName(user.lastName);
+            setEmail(user.email);
+        }
+    }, [user]);
 
     return (
         <div>
             <form className="form" onSubmit={submitHandler}>
                 <div>
-                    {userProfile && user && <h1>Ciao {user.firstName}, ecco il tuo profilo</h1>}
+                    {userProfile && user && (
+                        <h1>Ciao {user.firstName}, ecco il tuo profilo</h1>
+                    )}
                 </div>
                 {loading ? (
                     <LoadingBox></LoadingBox>
                 ) : error ? (
                     <MessageBox variant="danger">{error}</MessageBox>
-                ) : (userProfile && user &&
-                    <>
-                        <div>
-                            <input
-                                type="text"
-                                id="first-name"
-                                defaultValue={firstName ? firstName : user.firstName}
-                                required
-                                onChange={(e) => setFirstName(e.target.value)}
-                            ></input>
-                        </div>
-                        <div>
-                            <input
-                                type="text"
-                                id="last-name"
-                                defaultValue={lastName ? lastName : user.lastName}
-                                required
-                                onChange={(e) => setLastName(e.target.value)}
-                            ></input>
-                        </div>
-                        <div>
-                            <input
-                                type="email"
-                                id="email"
-                                defaultValue={user.email}
-                                required
-                                onChange={(e) => setEmail(e.target.value)}
-                            ></input>
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                id="password"
-                                defaultValue={user.password}
-                                required
-                                onChange={(e) => setPassword(e.target.value)}
-                            ></input>
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                id="confirm-password"
-                                placeholder="Conferma password"
-                                required
-                                onChange={(e) =>
-                                    setConfirmedPassword(e.target.value)
-                                }
-                            ></input>
-                        </div>
-                        <div>
-                            <button className="button" type="submit">Aggiorna i tuoi dati</button>
-                        </div>
-                        {formError && <MessageBox variant="danger">ATTENZIONE! Le password non coincidono!</MessageBox>}
-                        {loadingUpdate && <LoadingBox></LoadingBox>}
-                        {successUpdate && <MessageBox variant="success">Il tuo profilo è stato aggiornato con successo!</MessageBox>}
-                        {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
-                    </>
+                ) : (
+                    userProfile &&
+                    user && (
+                        <>
+                            <div>
+                                <input
+                                    type="text"
+                                    id="first-name"
+                                    defaultValue={firstName ? firstName : userInfo.firstName}
+                                    required
+                                    onChange={(e) =>
+                                        setFirstName(e.target.value)
+                                    }
+                                ></input>
+                            </div>
+                            <div>
+                                <input
+                                    type="text"
+                                    id="last-name"
+                                    defaultValue={lastName ? lastName : userInfo.lastName}
+                                    required
+                                    onChange={(e) =>
+                                        setLastName(e.target.value)
+                                    }
+                                ></input>
+                            </div>
+                            <div>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    defaultValue={email ? email : userInfo.email}
+                                    required
+                                    onChange={(e) => setEmail(e.target.value)}
+                                ></input>
+                            </div>
+                            <div>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="Inserisci password per modificarla"
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                ></input>
+                            </div>
+                            <div>
+                                <input
+                                    type="password"
+                                    id="confirm-password"
+                                    placeholder="Conferma password per completare modifica"
+                                    onChange={(e) =>
+                                        setConfirmedPassword(e.target.value)
+                                    }
+                                ></input>
+                            </div>
+                            <div>
+                                <button className="button" type="submit">
+                                    Aggiorna i tuoi dati
+                                </button>
+                            </div>
+                            {formError && (
+                                <MessageBox variant="danger">
+                                    ATTENZIONE! Le password non coincidono!
+                                </MessageBox>
+                            )}
+                            {loadingUpdate && <LoadingBox></LoadingBox>}
+                            {successUpdate && (
+                                <MessageBox variant="success">
+                                    Il tuo profilo è stato aggiornato con
+                                    successo!
+                                </MessageBox>
+                            )}
+                            {errorUpdate && (
+                                <MessageBox variant="danger">
+                                    {errorUpdate}
+                                </MessageBox>
+                            )}
+                        </>
+                    )
                 )}
             </form>
         </div>
