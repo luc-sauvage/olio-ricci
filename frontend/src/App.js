@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import Shop from "./screens/shop";
 import Home from "./screens/home";
@@ -32,25 +32,17 @@ export default function App() {
         dispatch(logout());
     }
 
-    useEffect(() => {
-        if (userInfo) {
-            const userName = document.querySelector(".dropdown");
-            const arrow = document.querySelector(".fa-caret-down");
-            const dropdown = document.querySelector(".dropdown-content");
-            userName.addEventListener("click", dropDown);
+    const userNameRef = useRef();
+    const arrowRef = useRef();
+    const dropDownRef = useRef();
 
-            return function cleanUp() {
-                userName.removeEventListener("click", dropDown);
-            }
 
-            function dropDown() {
-                console.log("click");
-                dropdown.classList.toggle("dropdown-off");
-                arrow.classList.toggle("right");
-                arrow.classList.toggle("down");
-            }
-        }
-    }, [userInfo]);
+    function dropDown() {
+        dropDownRef.current.classList.toggle("dropdown-off");
+        arrowRef.current.classList.toggle("right");
+        arrowRef.current.classList.toggle("down");
+    }
+
 
     return (
         <BrowserRouter>
@@ -78,36 +70,16 @@ export default function App() {
                             <span className="badge">{cart.length}</span>
                         )}
                         {userInfo && !userInfo.isAdmin ? (
-                            <div
-                                /* onClick={() => {
-                                    let userName = document.querySelector(
-                                        ".dropdown"
-                                    );
-                                    let arrow = document.querySelector(
-                                        ".fa-caret-down"
-                                    );
-                                    let dropdown = document.querySelector(
-                                        ".dropdown-content"
-                                    );
-                                    userName.addEventListener(
-                                        "click",
-                                        function () {
-                                            console.log("click");
-                                            dropdown.classList.toggle(
-                                                "dropdown-off"
-                                            );
-                                            arrow.classList.toggle("right");
-                                            arrow.classList.toggle("down");
-                                        }
-                                    );
-                                }} */
-                                className="dropdown"
-                            >
+                            <div ref={userNameRef} onClick={dropDown} className="dropdown">
                                 <p>
                                     Ciao, {userInfo.firstName}{" "}
-                                    <i className="fa fa-caret-down right "></i>{" "}
+                                    <i
+                                        ref={arrowRef} className="fa fa-caret-down right "
+                                    ></i>{" "}
                                 </p>
-                                <ul className="dropdown-content dropdown-off">
+                                <ul
+                                    ref={dropDownRef} className="dropdown-content dropdown-off"
+                                >
                                     <li>
                                         <Link
                                             className="navbar-link"
@@ -136,20 +108,18 @@ export default function App() {
                                 </ul>
                             </div>
                         ) : userInfo && userInfo.isAdmin ? (
-                            <div
-                                className="dropdown"
-                            >
+                            <div ref={userNameRef} onClick={dropDown} className="dropdown">
                                 <p>
                                     Ciao, {userInfo.firstName}{" "}
-                                    <i className="fa fa-caret-down right "></i>{" "}
+                                    <i ref={arrowRef} className="fa fa-caret-down right "></i>{" "}
                                 </p>
-                                <ul className="dropdown-content dropdown-off">
+                                <ul ref={dropDownRef} className="dropdown-content dropdown-off">
                                     <li>
                                         <Link
                                             className="navbar-link"
-                                            to="/admin-dashboard"
+                                            to="/user-profile"
                                         >
-                                            Opzioni amministratore
+                                            Il tuo profilo
                                         </Link>
                                     </li>
                                     <li>
