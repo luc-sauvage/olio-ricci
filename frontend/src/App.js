@@ -32,34 +32,23 @@ export default function App() {
         dispatch(logout());
     }
 
-    /* const userName = document.querySelector(".dropdown");
-    const arrow = document.querySelector(".fa-caret-down");
-    const dropdown = document.querySelector(".dropdown-content"); */
-
-    /* function dropDown() {
-        let userName = document.querySelector(".dropdown");
-        let arrow = document.querySelector(".fa-caret-down");
-        let dropdown = document.querySelector(".dropdown-content");
-        userName.addEventListener("click", function () {
-            console.log("click");
-            dropdown.classList.toggle("dropdown-off");
-            arrow.classList.toggle("right");
-            arrow.classList.toggle("down");
-        });
-    } */
-
     useEffect(() => {
         if (userInfo) {
-            console.log("user info has changed")
             const userName = document.querySelector(".dropdown");
             const arrow = document.querySelector(".fa-caret-down");
             const dropdown = document.querySelector(".dropdown-content");
-            userName.addEventListener("click", function () {
+            userName.addEventListener("click", dropDown);
+
+            return function cleanUp() {
+                userName.removeEventListener("click", dropDown);
+            }
+
+            function dropDown() {
                 console.log("click");
                 dropdown.classList.toggle("dropdown-off");
                 arrow.classList.toggle("right");
                 arrow.classList.toggle("down");
-            });
+            }
         }
     }, [userInfo]);
 
