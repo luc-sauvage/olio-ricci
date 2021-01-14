@@ -11,7 +11,7 @@ import Shipping from "./screens/shipping";
 import Payment from "./screens/payment";
 import PlaceOrder from "./screens/placeOrder";
 import Order from "./screens/order";
-import { loadStripe } from "@stripe/stripe-js"
+import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import OrderHistory from "./screens/orderHistory";
 import Profile from "./screens/profile";
@@ -19,32 +19,49 @@ const promise = loadStripe(
     "pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh"
 );
 
-
 export default function App() {
-
-    const productsCart = useSelector(state => state.productCart);
+    const productsCart = useSelector((state) => state.productCart);
     const { cart } = productsCart;
 
     const userLogin = useSelector((state) => state.userLogin);
-    const { userInfo } = userLogin;
+    const { userInfo, loading } = userLogin;
+
     const dispatch = useDispatch();
 
     function signoutHandler() {
         dispatch(logout());
     }
 
+    /* const userName = document.querySelector(".dropdown");
+    const arrow = document.querySelector(".fa-caret-down");
+    const dropdown = document.querySelector(".dropdown-content"); */
+
+    /* function dropDown() {
+        let userName = document.querySelector(".dropdown");
+        let arrow = document.querySelector(".fa-caret-down");
+        let dropdown = document.querySelector(".dropdown-content");
+        userName.addEventListener("click", function () {
+            console.log("click");
+            dropdown.classList.toggle("dropdown-off");
+            arrow.classList.toggle("right");
+            arrow.classList.toggle("down");
+        });
+    } */
+
     useEffect(() => {
         if (userInfo) {
-            let userName = document.querySelector(".dropdown");
-            let arrow = document.querySelector(".fa-caret-down");
-            let dropdown = document.querySelector(".dropdown-content");
+            console.log("user info has changed")
+            const userName = document.querySelector(".dropdown");
+            const arrow = document.querySelector(".fa-caret-down");
+            const dropdown = document.querySelector(".dropdown-content");
             userName.addEventListener("click", function () {
+                console.log("click");
                 dropdown.classList.toggle("dropdown-off");
                 arrow.classList.toggle("right");
                 arrow.classList.toggle("down");
             });
         }
-    }, []);
+    }, [userInfo]);
 
     return (
         <BrowserRouter>
@@ -71,14 +88,38 @@ export default function App() {
                         {cart.length > 0 && (
                             <span className="badge">{cart.length}</span>
                         )}
-                        {userInfo ? (
-                            <div className="dropdown">
+                        {userInfo && !userInfo.isAdmin ? (
+                            <div
+                                /* onClick={() => {
+                                    let userName = document.querySelector(
+                                        ".dropdown"
+                                    );
+                                    let arrow = document.querySelector(
+                                        ".fa-caret-down"
+                                    );
+                                    let dropdown = document.querySelector(
+                                        ".dropdown-content"
+                                    );
+                                    userName.addEventListener(
+                                        "click",
+                                        function () {
+                                            console.log("click");
+                                            dropdown.classList.toggle(
+                                                "dropdown-off"
+                                            );
+                                            arrow.classList.toggle("right");
+                                            arrow.classList.toggle("down");
+                                        }
+                                    );
+                                }} */
+                                className="dropdown"
+                            >
                                 <p>
                                     Ciao, {userInfo.firstName}{" "}
                                     <i className="fa fa-caret-down right "></i>{" "}
                                 </p>
                                 <ul className="dropdown-content dropdown-off">
-                                <li>
+                                    <li>
                                         <Link
                                             className="navbar-link"
                                             to="/user-profile"
@@ -92,6 +133,58 @@ export default function App() {
                                             to="/orderhistory"
                                         >
                                             I tuoi ordini
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            className="navbar-link"
+                                            to="/login"
+                                            onClick={signoutHandler}
+                                        >
+                                            Logout
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        ) : userInfo && userInfo.isAdmin ? (
+                            <div
+                                className="dropdown"
+                            >
+                                <p>
+                                    Ciao, {userInfo.firstName}{" "}
+                                    <i className="fa fa-caret-down right "></i>{" "}
+                                </p>
+                                <ul className="dropdown-content dropdown-off">
+                                    <li>
+                                        <Link
+                                            className="navbar-link"
+                                            to="/admin-dashboard"
+                                        >
+                                            Opzioni amministratore
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            className="navbar-link"
+                                            to="/admin-products"
+                                        >
+                                            Gestisti prodotti
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            className="navbar-link"
+                                            to="/admin-orders"
+                                        >
+                                            Lista ordini
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            className="navbar-link"
+                                            to="/admin-users"
+                                        >
+                                            Lista utenti
                                         </Link>
                                     </li>
                                     <li>

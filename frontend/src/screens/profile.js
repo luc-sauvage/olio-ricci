@@ -6,7 +6,7 @@ import MessageBox from '../components/messagebox';
 import { USER_PROFILE_UPDATE_RESET } from '../constants/userConstants';
 
 
-export default function Profile() {
+export default function Profile(props) {
     const dispatch = useDispatch();
 
     const [firstName, setFirstName] = useState("");
@@ -44,16 +44,20 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        dispatch({type: USER_PROFILE_UPDATE_RESET});
-        if (!user) {
-            setFirstName(userInfo.firstName);
-            setLastName(userInfo.lastName);
-            setEmail(userInfo.email)
-            dispatch(getUserProfile(userId));
+        dispatch({ type: USER_PROFILE_UPDATE_RESET });
+        if (userId) {
+            if (!user) {
+                setFirstName(userInfo.firstName);
+                setLastName(userInfo.lastName);
+                setEmail(userInfo.email);
+                dispatch(getUserProfile(userId));
+            } else {
+                setFirstName(user.firstName);
+                setLastName(user.lastName);
+                setEmail(user.email);
+            }
         } else {
-            setFirstName(user.firstName);
-            setLastName(user.lastName);
-            setEmail(user.email);
+            props.history.push("/login");
         }
     }, [user]);
 

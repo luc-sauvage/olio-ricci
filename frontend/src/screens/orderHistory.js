@@ -5,7 +5,7 @@ import { getOrderList } from '../actions/orderActions';
 import LoadingBox from '../components/loadingbox';
 import MessageBox from '../components/messagebox';
 
-export default function OrderHistory() {
+export default function OrderHistory(props) {
 
     const ordersList = useSelector((state) => state.ordersList);
     const { loading, error, orders } = ordersList;
@@ -17,8 +17,11 @@ export default function OrderHistory() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(userId);
+        if (userId) {
         dispatch(getOrderList(userId));
+        } else {
+            props.history.push("/login");
+        }
     }, [dispatch, userId])
 
     return (
