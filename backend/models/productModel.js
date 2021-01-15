@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema(
         nome: { type: String, required: true, unique: true },
         foto: { type: String, required: true },
         prezzo: { type: Number, required: true },
-        disponibile: { type: String, default: "si", required: true },
+        disponibile: { type: String, required: true },
         descrizione: { type: String }
     },
     {
