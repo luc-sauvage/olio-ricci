@@ -35,4 +35,11 @@ productRouter.post(
     })
 );
 
+productRouter.put(
+    "/modifica",
+    expressAsyncHandler(async (req, res) => {
+        const prodotto = await Prodotto.findById(req.body.productId);
+    })
+);
+
 export default productRouter;

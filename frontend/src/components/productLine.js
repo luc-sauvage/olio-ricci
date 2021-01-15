@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { editProduct } from "../actions/productActions";
 
 export default function ProductLine({ prodotto }) {
+
+    const dispatch = useDispatch();
+
     const [editMode, setEditMode] = useState(false);
     const [nomeProdotto, setNomeProdotto] = useState("");
     const [descrizioneProdotto, setDescrizioneProdotto] = useState("");
@@ -8,7 +13,7 @@ export default function ProductLine({ prodotto }) {
     const [availability, setAvailability] = useState("");
 
     function saveChanges() {
-        // do something
+        dispatch(editProduct(prodotto._id, nomeProdotto, descrizioneProdotto, prezzoProdotto, availability));
         setEditMode(false);
     }
 
