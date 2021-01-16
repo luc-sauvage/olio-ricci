@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editProduct } from "../actions/productActions";
-import { CREATE_PRODUCT_RESET } from "../constants/productConstants";
+import { deleteProduct, editProduct } from "../actions/productActions";
+import { CREATE_PRODUCT_RESET, DELETE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "../constants/productConstants";
 
 export default function ProductLine({ prodotto }) {
 
@@ -15,19 +15,21 @@ export default function ProductLine({ prodotto }) {
 
     function saveChanges() {
         dispatch({ type: CREATE_PRODUCT_RESET });
+        dispatch({type: DELETE_PRODUCT_RESET});
         dispatch(editProduct(prodotto._id, nomeProdotto, descrizioneProdotto, prezzoProdotto, availability));
         setEditMode(false);
     }
 
-    function deleteProduct() {
-        // do something
+    function deleteProductFoo(productId) {
+        dispatch(deleteProduct(productId));
+        dispatch({ type: CREATE_PRODUCT_RESET });
+        dispatch({type: EDIT_PRODUCT_RESET});
     }
 
     return (
         <tr key={prodotto._id}>
             <td>{prodotto._id}</td>
             <td>{prodotto.updatedAt.substring(0, 10)}</td>
-
             {!editMode && (
                 <>
                     <td>{prodotto.nome}</td>
@@ -119,7 +121,7 @@ export default function ProductLine({ prodotto }) {
                      ) : (<button
                         type="button"
                         className="button"
-                        onClick={() => deleteProduct(prodotto._id)}
+                        onClick={() => deleteProductFoo(prodotto._id)}
                     >
                         Elimina
                     </button>

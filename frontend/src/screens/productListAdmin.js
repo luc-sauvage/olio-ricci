@@ -4,7 +4,7 @@ import { createProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/loadingbox";
 import MessageBox from "../components/messagebox";
 import ProductLine from "../components/productLine";
-import { CREATE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "../constants/productConstants";
+import { CREATE_PRODUCT_RESET, DELETE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "../constants/productConstants";
 
 export default function ProductListAdmin(props) {
     const dispatch = useDispatch();
@@ -31,6 +31,9 @@ export default function ProductListAdmin(props) {
         loading: editLoading,
     } = lastEditedProduct;
 
+    const lastDeletedProduct = useSelector((state) => state.deleteProduct);
+    const {deletedProduct, success: deleteSuccess, loading: deleteLoading, error: deleteError} = lastDeletedProduct; 
+
     const [createProductFields, setCreateProductFields] = useState(false);
 
     const [nomeProdotto, setNomeProdotto] = useState("");
@@ -38,8 +41,9 @@ export default function ProductListAdmin(props) {
     const [prezzoProdotto, setPrezzoProdotto] = useState(null);
     const [availability, setAvailability] = useState("si");
 
-    function openCreateProductFields () {
+    function openCreateProductFields() {
         dispatch({ type: EDIT_PRODUCT_RESET });
+        dispatch({ type: DELETE_PRODUCT_RESET });
         setCreateProductFields(true);
     }
 
@@ -58,6 +62,7 @@ export default function ProductListAdmin(props) {
      useEffect(() => {
         dispatch({ type: EDIT_PRODUCT_RESET });
         dispatch({ type: CREATE_PRODUCT_RESET });
+        dispatch({ type: DELETE_PRODUCT_RESET });
     }, []);
 
     useEffect(() => {
@@ -66,8 +71,7 @@ export default function ProductListAdmin(props) {
         } else {
             props.history.push("/");
         }
-
-    }, [newProduct, editedProduct]);
+    }, [newProduct, editedProduct, deletedProduct]);
 
     return (
         <div>
@@ -97,6 +101,21 @@ export default function ProductListAdmin(props) {
                     </div>
                 )}
                 {editedProduct && editError && (
+                    <div>
+                        <MessageBox className=".alert-info">
+                            {editError}
+                        </MessageBox>
+                    </div>
+                )}
+                {deletedProduct && deleteLoading && <LoadingBox></LoadingBox>}
+                {deletedProduct && deleteSuccess && (
+                    <div>
+                        <MessageBox className=".alert-info">
+                            Prodotto eliminato con successo!
+                        </MessageBox>
+                    </div>
+                )}
+                {deletedProduct && deleteError && (
                     <div>
                         <MessageBox className=".alert-info">
                             {editError}

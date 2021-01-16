@@ -9,6 +9,10 @@ import {
     PRODUCT_LIST_FAIL,
     PRODUCT_LIST_REQUEST,
     PRODUCT_LIST_SUCCESS,
+    DELETE_PRODUCT_REQUEST,
+    DELETE_PRODUCT_SUCCESS,
+    DELETE_PRODUCT_FAIL
+
 } from "../constants/productConstants";
 
 export const listProducts = () => async (dispatch) => {
@@ -75,3 +79,19 @@ export const editProduct = (id, name, description, price, availability) => async
         });
     }
 };
+
+export const deleteProduct = (productId) => async (dispatch) => {
+    dispatch({type: DELETE_PRODUCT_REQUEST});
+    try {
+        const { data } = await Axios.delete(`/api/prodotti/rimuovi/${productId}`);
+        dispatch({type: DELETE_PRODUCT_SUCCESS, payload: data});
+    } catch (error) {
+        dispatch({
+            type: DELETE_PRODUCT_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+}

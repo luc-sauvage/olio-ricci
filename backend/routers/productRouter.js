@@ -17,6 +17,7 @@ productRouter.get(
     })
 );
 
+
 productRouter.post(
     "/crea",
     expressAsyncHandler(async (req, res) => {
@@ -57,5 +58,19 @@ productRouter.put(
         })
     })
 );
+
+
+productRouter.delete("/rimuovi/:id", expressAsyncHandler (async(req, res) => {
+    console.log("test route", req.params.id);
+    const prodotto = await Prodotto.findById(req.params.id);
+    console.log(prodotto);
+    const deletedProdotto = await prodotto.deleteOne();
+    res.send({
+        message: "Prodotto eliminato con successo!",
+        product: deletedProdotto,
+    });
+}))
+
+
 
 export default productRouter;
