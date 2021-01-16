@@ -38,7 +38,23 @@ productRouter.post(
 productRouter.put(
     "/modifica",
     expressAsyncHandler(async (req, res) => {
-        const prodotto = await Prodotto.findById(req.body.productId);
+        const prodotto = await Prodotto.findById(req.body.id);
+        if (prodotto) {
+            prodotto.nome = req.body.name || prodotto.nome;
+            /* prodotto.foto = ... need to be completed */
+            prodotto.descrizione = req.body.description || prodotto.descrizione;
+            prodotto.prezzo = req.body.price || prodotto.prezzo; 
+            prodotto.disponibile = req.body.availability || prodotto.disponibile;
+        }
+        const updatedProdotto = await prodotto.save();
+        res.send({
+            _id: updatedProdotto._id,
+            nome: updatedProdotto.nome, 
+            /* foto: updatedProdotto.foto,  */
+            descrizione: updatedProdotto.descrizione,
+            prezzo: updatedProdotto.prezzo,
+            descrizione: updatedProdotto.descrizione
+        })
     })
 );
 

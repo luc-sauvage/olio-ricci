@@ -4,6 +4,7 @@ import { createProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/loadingbox";
 import MessageBox from "../components/messagebox";
 import ProductLine from "../components/productLine";
+import { CREATE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "../constants/productConstants";
 
 export default function ProductListAdmin(props) {
     const dispatch = useDispatch();
@@ -19,7 +20,16 @@ export default function ProductListAdmin(props) {
         success,
         loading: loadingNewProduct,
         newProduct,
+        error: createError,
     } = createNewProduct;
+
+    const lastEditedProduct = useSelector((state) => state.editProduct);
+    const {
+        editedProduct,
+        error: editError,
+        success: editSuccess,
+        loading: editLoading,
+    } = lastEditedProduct;
 
     const [createProductFields, setCreateProductFields] = useState(false);
 
@@ -27,6 +37,11 @@ export default function ProductListAdmin(props) {
     const [descrizioneProdotto, setDescrizioneProdotto] = useState("");
     const [prezzoProdotto, setPrezzoProdotto] = useState(null);
     const [availability, setAvailability] = useState("si");
+
+    function openCreateProductFields () {
+        dispatch({ type: EDIT_PRODUCT_RESET });
+        setCreateProductFields(true);
+    }
 
     function createProductHandler() {
         dispatch(
@@ -40,13 +55,19 @@ export default function ProductListAdmin(props) {
         setCreateProductFields(false);
     }
 
+     useEffect(() => {
+        dispatch({ type: EDIT_PRODUCT_RESET });
+        dispatch({ type: CREATE_PRODUCT_RESET });
+    }, []);
+
     useEffect(() => {
-        if (isAdmin || success) {
-            dispatch(listProducts());
+        if (isAdmin) {
+            dispatch(listProducts());   
         } else {
             props.history.push("/");
         }
-    }, [dispatch, success]);
+
+    }, [newProduct, editedProduct]);
 
     return (
         <div>
@@ -62,11 +83,31 @@ export default function ProductListAdmin(props) {
                         </MessageBox>
                     </div>
                 )}
+                {createNewProduct && createError && (
+                    <div>
+                        <MessageBox variant="dangers">{createError}</MessageBox>
+                    </div>
+                )}
+                {editedProduct && editLoading && <LoadingBox></LoadingBox>}
+                {editedProduct && editSuccess && (
+                    <div>
+                        <MessageBox className=".alert-info">
+                            Prodotto modificato con successo!
+                        </MessageBox>
+                    </div>
+                )}
+                {editedProduct && editError && (
+                    <div>
+                        <MessageBox className=".alert-info">
+                            {editError}
+                        </MessageBox>
+                    </div>
+                )}
                 {!createProductFields && (
                     <button
                         type="button"
                         className="button"
-                        onClick={() => setCreateProductFields(true)}
+                        onClick={openCreateProductFields}
                     >
                         Crea prodotto
                     </button>

@@ -202,11 +202,13 @@ header a {
 .alert-info {
     color: #2020a0;
     background-color: #e0e0ff;
+    padding: 0.5rem 1rem;
 }
 
 .alert-danger {
     color: #a02020;
     background-color: #ffe0e0e0;
+    padding: 0.5rem 1rem;
 }
 
 /* form  */

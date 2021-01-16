@@ -52,12 +52,13 @@ export const createProduct = (name, description, price, availability) => async (
     }
 };
 
-export const editProduct = (name, description, price, availability) => async (
+export const editProduct = (id, name, description, price, availability) => async (
     dispatch
 ) => {
     dispatch({ type: EDIT_PRODUCT_REQUEST });
     try {
-        const { data } = await Axios.post("/api/prodotti/modifica", {
+        const { data } = await Axios.put("/api/prodotti/modifica", {
+            id, 
             name,
             description,
             price,

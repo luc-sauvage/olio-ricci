@@ -7,7 +7,9 @@ const {
     CREATE_PRODUCT_FAIL,
     EDIT_PRODUCT_REQUEST,
     EDIT_PRODUCT_SUCCESS,
-    EDIT_PRODUCT_FAIL
+    EDIT_PRODUCT_FAIL,
+    CREATE_PRODUCT_RESET,
+    EDIT_PRODUCT_RESET
 } = require("../constants/productConstants");
 
 export const productListReducer = (state = { prodotti: [] }, action) => {
@@ -28,23 +30,35 @@ export const createProductReducer = (state = {}, action) => {
         case CREATE_PRODUCT_REQUEST:
             return { loading: true };
         case CREATE_PRODUCT_SUCCESS:
-            return { loading: false, success: true, newProduct: action.payload };
+            return {
+                loading: false,
+                success: true,
+                newProduct: action.payload,
+            };
         case CREATE_PRODUCT_FAIL:
             return { loading: false, error: action.payload };
+        case CREATE_PRODUCT_RESET:
+            return {};
         default:
             return state;
     }
-}
+};
 
 export const editProductReducer = (state = {}, action) => {
     switch (action.type) {
         case EDIT_PRODUCT_REQUEST:
             return { loading: true };
         case EDIT_PRODUCT_SUCCESS:
-            return { loading: false, success: true, editedProduct: action.payload };
+            return {
+                loading: false,
+                success: true,
+                editedProduct: action.payload,
+            };
         case EDIT_PRODUCT_FAIL:
             return { loading: false, error: action.payload };
+        case EDIT_PRODUCT_RESET:
+            return {};
         default:
             return state;
     }
-}
+};

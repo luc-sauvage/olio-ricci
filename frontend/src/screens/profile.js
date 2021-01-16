@@ -140,7 +140,7 @@ export default function Profile(props) {
                             )}
                             {loadingUpdate && <LoadingBox></LoadingBox>}
                             {successUpdate && (
-                                <MessageBox variant="success">
+                                <MessageBox className=".alert-info">
                                     Il tuo profilo è stato aggiornato con
                                     successo!
                                 </MessageBox>
