@@ -53,6 +53,8 @@ export const getUserProfileReducer = (state = { loading: true }, action) => {
             return { loading: false, user: action.payload };
         case USER_PROFILE_FAIL:
             return { loading: false, error: action.payload };
+        case USER_LOGOUT:
+            return {};
         default:
             return state;
     }
@@ -67,6 +69,8 @@ export const updateUserProfileReducer = (state = {}, action) => {
         case USER_PROFILE_UPDATE_FAIL:
             return { loading: false, error: action.payload };
         case USER_PROFILE_UPDATE_RESET:
+            return {};
+        case USER_LOGOUT:
             return {};
         default:
             return state;

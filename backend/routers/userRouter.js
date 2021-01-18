@@ -2,7 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
-import { generateToken } from "../utils.js";
+import { generateToken, isAuth } from "../utils.js";
 
 const userRouter = express.Router();
 
@@ -27,9 +27,9 @@ userRouter.get(
 );
 
 userRouter.put(
-    "/update-profile",
+    "/update-profile", isAuth,
     expressAsyncHandler(async (req, res) => {
-        const user = await User.findById(req.body.userId);
+        const user = await User.findById(req.user._id);
         if (user) {
             user.firstName = req.body.firstName;
             user.lastName = req.body.lastName;
