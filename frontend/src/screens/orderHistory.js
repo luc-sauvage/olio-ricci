@@ -18,11 +18,11 @@ export default function OrderHistory(props) {
 
     useEffect(() => {
         if (userId) {
-        dispatch(getOrderList(userId));
+        dispatch(getOrderList());
         } else {
             props.history.push("/login");
         }
-    }, [dispatch, userId])
+    }, [dispatch])
 
     return (
         <div>

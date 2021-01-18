@@ -27,10 +27,15 @@ export const createOrder = (order) => async (dispatch, getState) => {
     }
 };
 
-export const getOrderDetails = (orderId) => async (dispatch) => {
+export const getOrderDetails = (orderId) => async (dispatch, getState) => {
+    const {
+        userLogin: { userInfo },
+    } = getState();
     dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
     try {
-        const { data } = await Axios.get(`/api/orders/${orderId}`);
+        const { data } = await Axios.get(`/api/orders/${orderId}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
         dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
@@ -43,11 +48,16 @@ export const getOrderDetails = (orderId) => async (dispatch) => {
     }
 };
 
-export const getOrderList = (userId) => async (dispatch) => {
+export const getOrderList = () => async (dispatch, getState) => {
     dispatch({ type: ORDER_LIST_REQUEST });
     try {
-        const {data} = await Axios.get(`/api/orders/history/${userId}`);
-        dispatch({type: ORDER_LIST_SUCCESS, payload: data});
+        const {
+            userLogin: { userInfo },
+        } = getState();
+        const { data } = await Axios.get("/api/orders/history/", {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
             type: ORDER_LIST_FAIL,
