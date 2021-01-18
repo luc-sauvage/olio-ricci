@@ -1,13 +1,15 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
+import { isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
 
 orderRouter.post(
     "/",
+    isAuth, 
     expressAsyncHandler(async (req, res) => {
-        const { userId, productCart, price } = req.body.order;
+        const { productCart, price } = req.body.order;
         const { paymentMethod, shippingAddress, cart } = productCart;
         const { subtotalPrice, shipmentCosts, totalPrice } = price;
 
@@ -16,7 +18,7 @@ orderRouter.post(
         } else {
             try {
             const order = new Order({
-                user: userId,
+                user: req.user._id,
                 ordine: cart,
                 spedizione: shippingAddress,
                 metodoPagamento: paymentMethod,
