@@ -34,16 +34,21 @@ export const listProducts = () => async (dispatch) => {
 };
 
 export const createProduct = (name, description, price, availability) => async (
-    dispatch
+    dispatch, getState
 ) => {
     dispatch({ type: CREATE_PRODUCT_REQUEST });
+    const {
+        userLogin: { userInfo },
+      } = getState();
     try {
         const { data } = await Axios.post("/api/prodotti/crea", {
             name,
             description,
             price,
             availability,
-        });
+        }, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          });
         dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
@@ -57,9 +62,12 @@ export const createProduct = (name, description, price, availability) => async (
 };
 
 export const editProduct = (id, name, description, price, availability) => async (
-    dispatch
+    dispatch, getState
 ) => {
     dispatch({ type: EDIT_PRODUCT_REQUEST });
+    const {
+        userLogin: { userInfo },
+      } = getState();
     try {
         const { data } = await Axios.put("/api/prodotti/modifica", {
             id, 
@@ -67,7 +75,9 @@ export const editProduct = (id, name, description, price, availability) => async
             description,
             price,
             availability,
-        });
+        }, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          });
         dispatch({ type: EDIT_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
@@ -80,10 +90,15 @@ export const editProduct = (id, name, description, price, availability) => async
     }
 };
 
-export const deleteProduct = (productId) => async (dispatch) => {
+export const deleteProduct = (productId) => async (dispatch, getState) => {
     dispatch({type: DELETE_PRODUCT_REQUEST});
+    const {
+        userLogin: { userInfo },
+      } = getState();
     try {
-        const { data } = await Axios.delete(`/api/prodotti/rimuovi/${productId}`);
+        const { data } = await Axios.delete(`/api/prodotti/rimuovi/${productId}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          });
         dispatch({type: DELETE_PRODUCT_SUCCESS, payload: data});
     } catch (error) {
         dispatch({
