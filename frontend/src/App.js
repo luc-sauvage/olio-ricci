@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import Shop from "./screens/shop";
 import Home from "./screens/home";
@@ -25,7 +25,7 @@ export default function App() {
     const { cart } = productsCart;
 
     const userLogin = useSelector((state) => state.userLogin);
-    const { userInfo, loading } = userLogin;
+    const { userInfo } = userLogin;
 
     const dispatch = useDispatch();
 

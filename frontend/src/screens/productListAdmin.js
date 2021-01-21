@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/loadingbox";
 import MessageBox from "../components/messagebox";
 import ProductLine from "../components/productLine";
 import { CREATE_PRODUCT_RESET, DELETE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "../constants/productConstants";
+import Axios from "axios";
 
 export default function ProductListAdmin(props) {
     const dispatch = useDispatch();
@@ -41,6 +42,13 @@ export default function ProductListAdmin(props) {
     const [prezzoProdotto, setPrezzoProdotto] = useState(null);
     const [availability, setAvailability] = useState("si");
 
+    const chooseImageButton = useRef();
+
+    const [loadingUpload, setLoadingUpload] = useState(false);
+    const [errorUpload, setErrorUpload] = useState("");
+    const [image, setImage] = useState("");
+
+
     function openCreateProductFields() {
         dispatch({ type: EDIT_PRODUCT_RESET });
         dispatch({ type: DELETE_PRODUCT_RESET });
@@ -57,6 +65,26 @@ export default function ProductListAdmin(props) {
             )
         );
         setCreateProductFields(false);
+    }
+
+    async function uploadFileHandler(e) {
+        const file = e.target.files[0];
+        const bodyFormData = new FormData();
+        bodyFormData.append("image", file);
+        setLoadingUpload(true);
+        try {
+            const { data } = await Axios.post("/api/uploads", bodyFormData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${userInfo.token}`,
+                },
+            });
+            setImage(data);
+            setLoadingUpload(false);
+        } catch (error) {
+            setErrorUpload(error.message);
+            setLoadingUpload(false);
+        }
     }
 
      useEffect(() => {
@@ -102,7 +130,7 @@ export default function ProductListAdmin(props) {
                 )}
                 {editedProduct && editError && (
                     <div>
-                        <MessageBox className=".alert-info">
+                        <MessageBox className=".alert-danger">
                             {editError}
                         </MessageBox>
                     </div>
@@ -117,10 +145,14 @@ export default function ProductListAdmin(props) {
                 )}
                 {deletedProduct && deleteError && (
                     <div>
-                        <MessageBox className=".alert-info">
-                            {editError}
+                        <MessageBox className=".alert-danger">
+                            {deleteError}
                         </MessageBox>
                     </div>
+                )}
+                {loadingUpload && <LoadingBox></LoadingBox>}
+                {errorUpload && (
+                    <MessageBox className=".alert-danger">{errorUpload}</MessageBox>
                 )}
                 {!createProductFields && (
                     <button
@@ -192,9 +224,22 @@ export default function ProductListAdmin(props) {
                                         ></input>
                                     </td>
                                     <td>
-                                        <button className="button">
-                                            Carica foto
+                                        <button
+                                            type="button"
+                                            className="button"
+                                            onClick={() =>
+                                                chooseImageButton.current.click()
+                                            }
+                                        >
+                                            Scegli foto
                                         </button>
+                                        <input
+                                            ref={chooseImageButton}
+                                            type="file"
+                                            id="imageFile"
+                                            onChange={uploadFileHandler}
+                                            style={{ display: "none" }}
+                                        ></input>
                                     </td>
                                     <td>
                                         <select
