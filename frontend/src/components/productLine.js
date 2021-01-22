@@ -1,15 +1,14 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, editProduct } from "../actions/productActions";
-import { CREATE_PRODUCT_RESET, DELETE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "../constants/productConstants";
-import {useUploadFile} from "../hooks/uploadFile.js"
+import {
+    CREATE_PRODUCT_RESET,
+    DELETE_PRODUCT_RESET,
+    EDIT_PRODUCT_RESET,
+} from "../constants/productConstants";
+import { useUploadFile } from "../hooks/uploadFile.js";
 
 export default function ProductLine({ prodotto }) {
-
-    if (prodotto.foto.includes("frontend")) {
-        prodotto.foto = prodotto.foto.replace("/frontend/public", ".");
-    
-    }
 
     const dispatch = useDispatch();
 
@@ -21,20 +20,33 @@ export default function ProductLine({ prodotto }) {
 
     function saveChanges() {
         dispatch({ type: CREATE_PRODUCT_RESET });
-        dispatch({type: DELETE_PRODUCT_RESET});
-        dispatch(editProduct(prodotto._id, nomeProdotto, descrizioneProdotto, image, prezzoProdotto, availability));
+        dispatch({ type: DELETE_PRODUCT_RESET });
+        dispatch(
+            editProduct(
+                prodotto._id,
+                nomeProdotto,
+                descrizioneProdotto,
+                image,
+                prezzoProdotto,
+                availability
+            )
+        );
         setEditMode(false);
     }
 
     function deleteProductFoo(productId) {
         dispatch(deleteProduct(productId));
         dispatch({ type: CREATE_PRODUCT_RESET });
-        dispatch({type: EDIT_PRODUCT_RESET});
+        dispatch({ type: EDIT_PRODUCT_RESET });
     }
     const chooseImageButton = useRef();
 
-    const [image, loadingUpload, errorUpload, uploadFileHandler] = useUploadFile(); 
-
+    const [
+        image,
+        loadingUpload,
+        errorUpload,
+        uploadFileHandler,
+    ] = useUploadFile();
 
     return (
         <tr key={prodotto._id}>

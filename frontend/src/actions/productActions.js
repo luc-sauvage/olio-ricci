@@ -36,6 +36,9 @@ export const listProducts = () => async (dispatch) => {
 export const createProduct = (name, description, image, price, availability) => async (
     dispatch, getState
 ) => {
+    if (image.includes("frontend")) {
+        image = image.replace("/frontend/public", ".");
+    }
     dispatch({ type: CREATE_PRODUCT_REQUEST });
     const {
         userLogin: { userInfo },
@@ -65,6 +68,9 @@ export const createProduct = (name, description, image, price, availability) => 
 export const editProduct = (id, name, description, image, price, availability) => async (
     dispatch, getState
 ) => {
+    if (image.includes("frontend")) {
+        image = image.replace("/frontend/public", ".");
+    }
     dispatch({ type: EDIT_PRODUCT_REQUEST });
     const {
         userLogin: { userInfo },
