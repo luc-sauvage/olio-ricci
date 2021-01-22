@@ -4,8 +4,12 @@ import { createProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/loadingbox";
 import MessageBox from "../components/messagebox";
 import ProductLine from "../components/productLine";
-import { CREATE_PRODUCT_RESET, DELETE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "../constants/productConstants";
-import Axios from "axios";
+import {
+    CREATE_PRODUCT_RESET,
+    DELETE_PRODUCT_RESET,
+    EDIT_PRODUCT_RESET,
+} from "../constants/productConstants";
+import { useUploadFile } from "../hooks/uploadFile.js";
 
 export default function ProductListAdmin(props) {
     const dispatch = useDispatch();
@@ -33,7 +37,12 @@ export default function ProductListAdmin(props) {
     } = lastEditedProduct;
 
     const lastDeletedProduct = useSelector((state) => state.deleteProduct);
-    const {deletedProduct, success: deleteSuccess, loading: deleteLoading, error: deleteError} = lastDeletedProduct; 
+    const {
+        deletedProduct,
+        success: deleteSuccess,
+        loading: deleteLoading,
+        error: deleteError,
+    } = lastDeletedProduct;
 
     const [createProductFields, setCreateProductFields] = useState(false);
 
@@ -43,11 +52,6 @@ export default function ProductListAdmin(props) {
     const [availability, setAvailability] = useState("si");
 
     const chooseImageButton = useRef();
-
-    const [loadingUpload, setLoadingUpload] = useState(false);
-    const [errorUpload, setErrorUpload] = useState("");
-    const [image, setImage] = useState("");
-
 
     function openCreateProductFields() {
         dispatch({ type: EDIT_PRODUCT_RESET });
@@ -68,27 +72,14 @@ export default function ProductListAdmin(props) {
         setCreateProductFields(false);
     }
 
-    async function uploadFileHandler(e) {
-        const file = e.target.files[0];
-        const bodyFormData = new FormData();
-        bodyFormData.append("image", file);
-        setLoadingUpload(true);
-        try {
-            const { data } = await Axios.post("/api/uploads", bodyFormData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${userInfo.token}`,
-                },
-            });
-            setImage(data);
-            setLoadingUpload(false);
-        } catch (error) {
-            setErrorUpload(error.message);
-            setLoadingUpload(false);
-        }
-    }
+    const [
+        image,
+        loadingUpload,
+        errorUpload,
+        uploadFileHandler,
+    ] = useUploadFile();
 
-     useEffect(() => {
+    useEffect(() => {
         dispatch({ type: EDIT_PRODUCT_RESET });
         dispatch({ type: CREATE_PRODUCT_RESET });
         dispatch({ type: DELETE_PRODUCT_RESET });
@@ -96,7 +87,7 @@ export default function ProductListAdmin(props) {
 
     useEffect(() => {
         if (isAdmin) {
-            dispatch(listProducts());   
+            dispatch(listProducts());
         } else {
             props.history.push("/");
         }
@@ -153,7 +144,9 @@ export default function ProductListAdmin(props) {
                 )}
                 {loadingUpload && <LoadingBox></LoadingBox>}
                 {errorUpload && (
-                    <MessageBox className=".alert-danger">{errorUpload}</MessageBox>
+                    <MessageBox className=".alert-danger">
+                        {errorUpload}
+                    </MessageBox>
                 )}
                 {!createProductFields && (
                     <button
