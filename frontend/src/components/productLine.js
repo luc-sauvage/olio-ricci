@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, editProduct } from "../actions/productActions";
 import { CREATE_PRODUCT_RESET, DELETE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "../constants/productConstants";
+import Axios from "axios";
 
 export default function ProductLine({ prodotto }) {
 
@@ -10,6 +11,9 @@ export default function ProductLine({ prodotto }) {
     
     }
 
+    const userLogin = useSelector(state => state.userLogin);
+    const {userInfo} = userLogin;
+
     const dispatch = useDispatch();
 
     const [editMode, setEditMode] = useState("");
@@ -17,11 +21,14 @@ export default function ProductLine({ prodotto }) {
     const [descrizioneProdotto, setDescrizioneProdotto] = useState("");
     const [prezzoProdotto, setPrezzoProdotto] = useState("");
     const [availability, setAvailability] = useState("");
+    const [image, setImage] = useState("");
+    const [loadingUpload, setLoadingUpload] = useState(false);
+    const [errorUpload, setErrorUpload] = useState("");
 
     function saveChanges() {
         dispatch({ type: CREATE_PRODUCT_RESET });
         dispatch({type: DELETE_PRODUCT_RESET});
-        dispatch(editProduct(prodotto._id, nomeProdotto, descrizioneProdotto, prezzoProdotto, availability));
+        dispatch(editProduct(prodotto._id, nomeProdotto, descrizioneProdotto, image, prezzoProdotto, availability));
         setEditMode(false);
     }
 
@@ -29,6 +36,27 @@ export default function ProductLine({ prodotto }) {
         dispatch(deleteProduct(productId));
         dispatch({ type: CREATE_PRODUCT_RESET });
         dispatch({type: EDIT_PRODUCT_RESET});
+    }
+    const chooseImageButton = useRef();
+
+    async function uploadFileHandler(e) {
+        const file = e.target.files[0];
+        const bodyFormData = new FormData();
+        bodyFormData.append("image", file);
+        setLoadingUpload(true);
+        try {
+            const { data } = await Axios.post("/api/uploads", bodyFormData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${userInfo.token}`,
+                },
+            });
+            setImage(data);
+            setLoadingUpload(false);
+        } catch (error) {
+            setErrorUpload(error.message);
+            setLoadingUpload(false);
+        }
     }
 
     return (
@@ -78,12 +106,26 @@ export default function ProductLine({ prodotto }) {
                             onChange={(e) => setPrezzoProdotto(e.target.value)}
                         ></input>
                     </td>
-                    <td>
+                    <td className="row">
                         <img
                             className="prod-image-small"
                             src={prodotto.foto}
                             alt={prodotto.nome}
                         ></img>
+                        <button
+                            type="button"
+                            className="button"
+                            onClick={() => chooseImageButton.current.click()}
+                        >
+                            Scegli foto
+                        </button>
+                        <input
+                            ref={chooseImageButton}
+                            type="file"
+                            id="imageFile"
+                            onChange={uploadFileHandler}
+                            style={{ display: "none" }}
+                        ></input>
                     </td>
                     <td>
                         <select
@@ -116,14 +158,16 @@ export default function ProductLine({ prodotto }) {
                 )}
             </td>
             <td>
-                {editMode ? (<button
+                {editMode ? (
+                    <button
                         type="button"
                         className="button"
                         onClick={() => setEditMode(false)}
                     >
                         Annulla
-                    </button> 
-                     ) : (<button
+                    </button>
+                ) : (
+                    <button
                         type="button"
                         className="button"
                         onClick={() => deleteProductFoo(prodotto._id)}
