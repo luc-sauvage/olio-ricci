@@ -60,6 +60,7 @@ export default function ProductListAdmin(props) {
             createProduct(
                 nomeProdotto,
                 descrizioneProdotto,
+                image,
                 Number(prezzoProdotto),
                 availability
             )

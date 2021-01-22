@@ -33,7 +33,7 @@ export const listProducts = () => async (dispatch) => {
     }
 };
 
-export const createProduct = (name, description, price, availability) => async (
+export const createProduct = (name, description, image, price, availability) => async (
     dispatch, getState
 ) => {
     dispatch({ type: CREATE_PRODUCT_REQUEST });
@@ -44,6 +44,7 @@ export const createProduct = (name, description, price, availability) => async (
         const { data } = await Axios.post("/api/prodotti/crea", {
             name,
             description,
+            image,
             price,
             availability,
         }, {
@@ -61,7 +62,7 @@ export const createProduct = (name, description, price, availability) => async (
     }
 };
 
-export const editProduct = (id, name, description, price, availability) => async (
+export const editProduct = (id, name, description, image, price, availability) => async (
     dispatch, getState
 ) => {
     dispatch({ type: EDIT_PRODUCT_REQUEST });
@@ -73,6 +74,7 @@ export const editProduct = (id, name, description, price, availability) => async
             id, 
             name,
             description,
+            image,
             price,
             availability,
         }, {

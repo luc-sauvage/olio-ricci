@@ -5,6 +5,11 @@ import { CREATE_PRODUCT_RESET, DELETE_PRODUCT_RESET, EDIT_PRODUCT_RESET } from "
 
 export default function ProductLine({ prodotto }) {
 
+    if (prodotto.foto.includes("frontend")) {
+        prodotto.foto = prodotto.foto.replace("/frontend/public", ".");
+    
+    }
+
     const dispatch = useDispatch();
 
     const [editMode, setEditMode] = useState("");

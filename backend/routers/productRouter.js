@@ -25,8 +25,7 @@ productRouter.post(
     expressAsyncHandler(async (req, res) => {
         const prodotto = new Prodotto({
             nome: req.body.name,
-            foto:
-                "/images/olio_blend.png" /* this is static, since i still did not decide what service to use for storing pics */,
+            foto: req.body.image,
             prezzo: req.body.price,
             disponibile: req.body.availability,
             descrizione: req.body.description,
@@ -46,7 +45,7 @@ productRouter.put(
         const prodotto = await Prodotto.findById(req.body.id);
         if (prodotto) {
             prodotto.nome = req.body.name || prodotto.nome;
-            /* prodotto.foto = ... need to be completed */
+            prodotto.foto = req.body.image || prodotto.foto;
             prodotto.descrizione = req.body.description || prodotto.descrizione;
             prodotto.prezzo = req.body.price || prodotto.prezzo;
             prodotto.disponibile =
@@ -56,7 +55,7 @@ productRouter.put(
         res.send({
             _id: updatedProdotto._id,
             nome: updatedProdotto.nome,
-            /* foto: updatedProdotto.foto,  */
+            foto: updatedProdotto.foto, 
             descrizione: updatedProdotto.descrizione,
             prezzo: updatedProdotto.prezzo,
             descrizione: updatedProdotto.descrizione,
