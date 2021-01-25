@@ -1,6 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
+import Prodotto from "../models/productModel.js";
 import { isAdmin, isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
@@ -9,6 +10,27 @@ orderRouter.get("/", isAuth, isAdmin, expressAsyncHandler (async(req, res) => {
     const ordini = await Order.find();
     res.send(ordini); 
 }))
+
+orderRouter.get(
+    "/history/", isAuth,
+    expressAsyncHandler(async (req, res) => {
+        const orders = await Order.find({ user: req.user._id });
+        res.send(orders);
+    })
+);
+
+orderRouter.get(
+    "/:id",
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+        const order = await Order.findById(req.params.id);
+        if (order) {
+            res.send(order);
+        } else {
+            res.status(404).send({ message: "order not found" });
+        }
+    })
+);
 
 orderRouter.post(
     "/",
@@ -30,6 +52,7 @@ orderRouter.post(
                     subtotale: subtotalPrice,
                     costiSpedizione: shipmentCosts,
                     totale: totalPrice,
+                    spedito: false,
                 });
                 const createdOrder = await order.save();
                 res.status(201).send({
@@ -43,24 +66,17 @@ orderRouter.post(
     })
 );
 
-orderRouter.get(
-    "/history/", isAuth,
-    expressAsyncHandler(async (req, res) => {
-        const orders = await Order.find({ user: req.user._id });
-        res.send(orders);
-    })
-);
-
-orderRouter.get(
-    "/:id",
+orderRouter.put(
+    "/dispatched",
     isAuth,
+    isAdmin,
     expressAsyncHandler(async (req, res) => {
-        const order = await Order.findById(req.params.id);
-        if (order) {
-            res.send(order);
-        } else {
-            res.status(404).send({ message: "order not found" });
+        const dispatchedOrder = await Order.findById(req.body.orderId);
+        if (dispatchedOrder) {
+            dispatchedOrder.spedito = true;
         }
+        const { spedito } = await dispatchedOrder.save();
+        res.send(spedito);
     })
 );
 

@@ -73,6 +73,10 @@ header a {
     padding: 1rem;
 }
 
+.fa-check {
+    color: green;
+}
+
 .badge {
     background-color: orangered;
     color: white;

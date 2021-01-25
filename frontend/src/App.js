@@ -143,14 +143,6 @@ export default function App() {
                                     <li>
                                         <Link
                                             className="navbar-link"
-                                            to="/admin-users"
-                                        >
-                                            Lista utenti
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            className="navbar-link"
                                             to="/login"
                                             onClick={signoutHandler}
                                         >

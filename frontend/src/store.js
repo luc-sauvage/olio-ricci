@@ -1,7 +1,7 @@
 import thunk from "redux-thunk";
 import { addToCartReducer } from "./reducers/cartReducers";
 import { setLastPageReducer } from "./reducers/navReducers";
-import { createOrderReducer, getAllOrdersListReducer, getOrderDetailsReducer, getOrderListReducer } from "./reducers/orderReducers";
+import { createOrderReducer, getAllOrdersListReducer, getOrderDetailsReducer, getOrderListReducer, setDispatchedOrderReducer } from "./reducers/orderReducers";
 import { createProductReducer, deleteProductReducer, editProductReducer, productListReducer } from "./reducers/productReducers";
 import { getUserProfileReducer, updateUserProfileReducer, userLoginReducer, userRegistrationReducer } from "./reducers/userReducers";
 const {
@@ -42,7 +42,8 @@ const reducer = combineReducers({
     createProduct: createProductReducer,
     editProduct: editProductReducer,
     deleteProduct: deleteProductReducer,
-    allOrdersList: getAllOrdersListReducer
+    allOrdersList: getAllOrdersListReducer,
+    dispatchOrder: setDispatchedOrderReducer
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

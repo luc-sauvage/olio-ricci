@@ -44,6 +44,10 @@ const orderSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
+        spedito: {
+            type: Boolean,
+            required: true,
+        }
     },
     {
         timestamps: true,

@@ -12,6 +12,9 @@ const {
     ALL_ORDER_LIST_REQUEST,
     ALL_ORDER_LIST_SUCCESS,
     ALL_ORDER_LIST_FAIL,
+    DISPATCHED_ORDER_REQUEST,
+    DISPATCHED_ORDER_SUCCESS,
+    DISPATCHED_ORDER_FAIL,
 } = require("../constants/orderConstants");
 
 export const createOrderReducer = (state = {}, action) => {
@@ -62,6 +65,19 @@ export const getAllOrdersListReducer = (state = {}, action) => {
         case ALL_ORDER_LIST_SUCCESS:
             return { loading: false, allUserOrders: action.payload };
         case ALL_ORDER_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+}
+
+export const setDispatchedOrderReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DISPATCHED_ORDER_REQUEST:
+            return { loading: true };
+        case DISPATCHED_ORDER_SUCCESS:
+            return { loading: false, dispatchedOrder: action.payload };
+        case DISPATCHED_ORDER_FAIL:
             return { loading: false, error: action.payload };
         default:
             return state;

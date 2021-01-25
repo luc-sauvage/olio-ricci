@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { CART_REMOVE_ALL } from "../constants/cartConstants";
-import { ALL_ORDER_LIST_FAIL, ALL_ORDER_LIST_REQUEST, ALL_ORDER_LIST_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_LIST_FAIL, ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS } from "../constants/orderConstants"
+import { ALL_ORDER_LIST_FAIL, ALL_ORDER_LIST_REQUEST, ALL_ORDER_LIST_SUCCESS, DISPATCHED_ORDER_FAIL, DISPATCHED_ORDER_REQUEST, DISPATCHED_ORDER_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_LIST_FAIL, ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS } from "../constants/orderConstants"
 
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -78,10 +78,8 @@ export const getAllOrdersList = () => async (dispatch, getState) => {
         const { data } = await Axios.get("/api/orders", {
             headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        console.log("data", data);
         dispatch({ type: ALL_ORDER_LIST_SUCCESS, payload: data });
     } catch (error) {
-        console.log("error", error);
         dispatch({
             type: ALL_ORDER_LIST_FAIL,
             payload:
@@ -90,4 +88,29 @@ export const getAllOrdersList = () => async (dispatch, getState) => {
                     : error.message,
         });
     }
-}
+};
+
+export const setDispatchedOrder = (orderId) => async (dispatch, getState) => {
+    dispatch({ type: DISPATCHED_ORDER_REQUEST });
+    try {
+        const {
+            userLogin: { userInfo },
+        } = getState();
+        const { data } = await Axios.put(
+            "/api/orders/dispatched",
+            { orderId },
+            {
+                headers: { Authorization: `Bearer ${userInfo.token}` },
+            }
+        );
+        dispatch({ type: DISPATCHED_ORDER_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({
+            type: DISPATCHED_ORDER_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
