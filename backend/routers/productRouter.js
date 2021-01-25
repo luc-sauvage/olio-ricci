@@ -1,7 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Prodotto from "../models/productModel.js";
-import { isAuth } from "../utils.js";
+import { isAdmin, isAuth } from "../utils.js";
 
 const productRouter = express.Router();
 
@@ -22,6 +22,7 @@ productRouter.get(
 productRouter.post(
     "/crea",
     isAuth,
+    isAdmin,
     expressAsyncHandler(async (req, res) => {
         const prodotto = new Prodotto({
             nome: req.body.name,
@@ -41,6 +42,7 @@ productRouter.post(
 productRouter.put(
     "/modifica",
     isAuth,
+    isAdmin,
     expressAsyncHandler(async (req, res) => {
         const prodotto = await Prodotto.findById(req.body.id);
         if (prodotto) {
@@ -66,6 +68,7 @@ productRouter.put(
 productRouter.delete(
     "/rimuovi/:id",
     isAuth,
+    isAdmin,
     expressAsyncHandler(async (req, res) => {
         const prodotto = await Prodotto.findById(req.params.id);
         const deletedProdotto = await prodotto.deleteOne();

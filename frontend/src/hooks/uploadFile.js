@@ -23,7 +23,7 @@ export function useUploadFile () {
                     Authorization: `Bearer ${userInfo.token}`,
                 },
             });
-            setImage(data);
+            setImage(data); 
             setLoadingUpload(false);
         } catch (error) {
             setErrorUpload(error.message);
