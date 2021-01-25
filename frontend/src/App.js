@@ -16,6 +16,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import OrderHistory from "./screens/orderHistory";
 import Profile from "./screens/profile";
 import ProductListAdmin from "./screens/productListAdmin";
+import OrderListAdmin from "./screens/orderListAdmin";
 const promise = loadStripe(
     "pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh"
 );
@@ -183,6 +184,7 @@ export default function App() {
                         path="/orderhistory"
                         component={OrderHistory}
                     ></Route>
+                    <Route exact path="/admin-orders" component={OrderListAdmin}></Route>
                     <Route exact path="/admin-products" component={ProductListAdmin}></Route>
                     <Route exact path="/login" component={LogIn}></Route>
                     <Route

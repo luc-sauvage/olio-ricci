@@ -1,9 +1,14 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
-import { isAuth } from "../utils.js";
+import { isAdmin, isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
+
+orderRouter.get("/", isAuth, isAdmin, expressAsyncHandler (async(req, res) => {
+    const ordini = await Order.find();
+    res.send(ordini); 
+}))
 
 orderRouter.post(
     "/",

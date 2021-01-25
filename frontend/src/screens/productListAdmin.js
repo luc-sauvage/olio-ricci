@@ -19,6 +19,7 @@ export default function ProductListAdmin(props) {
     const userData = useSelector((state) => state.userLogin);
     const { userInfo } = userData;
     const isAdmin = userInfo.isAdmin;
+    const userId = userInfo._id;
 
     const createNewProduct = useSelector((state) => state.createProduct);
     const {
@@ -88,8 +89,10 @@ export default function ProductListAdmin(props) {
     useEffect(() => {
         if (isAdmin) {
             dispatch(listProducts());
-        } else {
+        } else if (!isAdmin && userId) {
             props.history.push("/");
+        } else {
+            props.history.push("/login");
         }
     }, [newProduct, editedProduct, deletedProduct]);
 
