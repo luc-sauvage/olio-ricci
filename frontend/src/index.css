@@ -68,6 +68,7 @@ p {
     font-weight: 500;
 }
 
+
 .navbar-container {
     background-color: transparent;
     height: 10rem;
@@ -135,6 +136,11 @@ header a {
     margin-top: 10px;
 }
 
+.big {
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -169,6 +175,20 @@ header a {
 
 .min-70 {
     min-width: 70rem;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.flex-align-right-col {
+    align-items: flex-end;
+}
+
+.flex-align-left-col {
+    align-items: flex-start;
 }
 
 .prod-image {
@@ -297,7 +317,7 @@ header a {
 .content-title {
     font-family: "Roboto Slab", serif;
     font-weight: 600;
-    font-size: 4rem;
+    font-size: 5rem;
     border-bottom: solid 3px #00a300;
 }
 
@@ -330,12 +350,38 @@ header a {
     border-radius: 5px;
 }
 
+.single {
+    width: 100%;
+}
+
 .col-text {
     text-align: justify;
     text-justify: inter-word;
     line-height: 2.5rem;
     letter-spacing: 0.1rem;
 }
+
+.product-container {
+    width: 65%;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.product-title {
+    font-family: "Roboto Slab", serif;
+    font-weight: 500;
+    font-size: 4rem;
+    margin: 0;
+    padding: 0;
+}
+
+.shrink {
+    flex: 1 1 50rem;
+}
+
 
 /* form  */
 
