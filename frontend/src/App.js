@@ -41,15 +41,16 @@ export default function App() {
 
     function dropDown() {
         dropDownRef.current.classList.toggle("dropdown-off");
-        arrowRef.current.classList.toggle("right");
-        arrowRef.current.classList.toggle("down");
+        arrowRef.current.classList.toggle("right-pointing");
+        arrowRef.current.classList.toggle("down-pointing");
     }
 
 
     return (
         <BrowserRouter>
             <div className="grid-template">
-                <header className="row">
+                <header className="navbar-container row centered">
+                    <nav className="navbar">
                     <div>
                         <a href="/">
                             <img
@@ -76,7 +77,7 @@ export default function App() {
                                 <p>
                                     Ciao, {userInfo.firstName}{" "}
                                     <i
-                                        ref={arrowRef} className="fa fa-caret-down right "
+                                        ref={arrowRef} className="fa fa-caret-down right-pointing "
                                     ></i>{" "}
                                 </p>
                                 <ul
@@ -113,7 +114,7 @@ export default function App() {
                             <div ref={userNameRef} onClick={dropDown} className="dropdown">
                                 <p>
                                     Ciao, {userInfo.firstName}{" "}
-                                    <i ref={arrowRef} className="fa fa-caret-down right "></i>{" "}
+                                    <i ref={arrowRef} className="fa fa-caret-down right-pointing "></i>{" "}
                                 </p>
                                 <ul ref={dropDownRef} className="dropdown-content dropdown-off">
                                     <li>
@@ -157,6 +158,7 @@ export default function App() {
                             </Link>
                         )}
                     </div>
+                    </nav>
                 </header>
                 <main>
                     <Route exact path="/shop" component={Shop}></Route>
