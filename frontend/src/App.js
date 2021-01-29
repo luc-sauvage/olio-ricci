@@ -1,11 +1,9 @@
-import React, { useRef, useState } from "react";
-import { BrowserRouter, Link, Route } from "react-router-dom";
+
+import { BrowserRouter, Route } from "react-router-dom";
 import Shop from "./screens/shop";
 import Home from "./screens/home";
 import Cart from "./screens/cart";
-import { useDispatch, useSelector } from "react-redux";
 import LogIn from "./screens/login";
-import { logout } from "./actions/userActions";
 import Registration from "./screens/registration";
 import Shipping from "./screens/shipping";
 import Payment from "./screens/payment";
@@ -17,161 +15,17 @@ import OrderHistory from "./screens/orderHistory";
 import Profile from "./screens/profile";
 import ProductListAdmin from "./screens/productListAdmin";
 import OrderListAdmin from "./screens/orderListAdmin";
+import Navbar from "./components/navbar";
 const promise = loadStripe(
     "pk_test_51I6FuaBAowNX0CrKTv5CPsbyKpFuRwi3RJnrfNiBhjPhwxVANEoxNTPosoTfSTI6Fo5BDWErnZ7FvdE3ZnJNGoei00WDoA4BLh"
 );
 
 export default function App() {
-    const productsCart = useSelector((state) => state.productCart);
-    const { cart } = productsCart;
-
-    const userLogin = useSelector((state) => state.userLogin);
-    const { userInfo } = userLogin;
-
-    const dispatch = useDispatch();
-
-    const [scroll, setScroll] = useState(false)
-
-    function signoutHandler() {
-        dispatch(logout());
-    }
-
-    const userNameRef = useRef();
-    const arrowRef = useRef();
-    const dropDownRef = useRef();
-
-    function dropDown() {
-        dropDownRef.current.classList.toggle("dropdown-off");
-        arrowRef.current.classList.toggle("right-pointing");
-        arrowRef.current.classList.toggle("down-pointing");
-    }
-
-    
-
-    function changeNavBarColor() {
-        if (window.scrollY >= 80) {
-            setScroll(true);
-        } else {
-            setScroll(false);
-        }
-    }
-
-    window.addEventListener("scroll", changeNavBarColor);
 
     return (
         <BrowserRouter>
             <div className="grid-template">
-                <header className={scroll ? "navbar-container row centered colored" : "navbar-container row centered"}>
-                    <nav className="navbar">
-                    <div>
-                        <a href="/">
-                            <img
-                                src={scroll ? "./images/logo_green.png" : "./images/logo.png"}
-                                alt="olio ricci logo"
-                            ></img>
-                        </a>
-                    </div>
-                    <div>
-                        <Link className={scroll ? "navbar-link alt-link" : "navbar-link"} to="/">
-                            Home
-                        </Link>
-                        <Link className={scroll ? "navbar-link alt-link" : "navbar-link"} to="/shop">
-                            Negozio
-                        </Link>
-                        <Link className={scroll ? "navbar-link alt-link" : "navbar-link"} to="/cart">
-                            Carrello
-                        </Link>
-                        {cart.length > 0 && (
-                            <span className="badge">{cart.length}</span>
-                        )}
-                        {userInfo && !userInfo.isAdmin ? (
-                            <div ref={userNameRef} onClick={dropDown} className={scroll ? "dropdown alt-dropdown" : "dropdown"}>
-                                <p>
-                                    Ciao, {userInfo.firstName}{" "}
-                                    <i
-                                        ref={arrowRef} className="fa fa-caret-down right-pointing "
-                                    ></i>{" "}
-                                </p>
-                                <ul
-                                    ref={dropDownRef} className="dropdown-content dropdown-off"
-                                >
-                                    <li>
-                                        <Link
-                                            className="navbar-link"
-                                            to="/user-profile"
-                                        >
-                                            Il tuo profilo
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            className="navbar-link"
-                                            to="/orderhistory"
-                                        >
-                                            I tuoi ordini
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            className="navbar-link"
-                                            to="/login"
-                                            onClick={signoutHandler}
-                                        >
-                                            Logout
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        ) : userInfo && userInfo.isAdmin ? (
-                            <div ref={userNameRef} onClick={dropDown} className={scroll ? "dropdown alt-dropdown" : "dropdown"}>
-                                <p>
-                                    Ciao, {userInfo.firstName}{" "}
-                                    <i ref={arrowRef} className="fa fa-caret-down right-pointing "></i>{" "}
-                                </p>
-                                <ul ref={dropDownRef} className="dropdown-content dropdown-off">
-                                    <li>
-                                        <Link
-                                            className="navbar-link"
-                                            to="/user-profile"
-                                        >
-                                            Il tuo profilo
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            className="navbar-link"
-                                            to="/admin-products"
-                                        >
-                                            Gestisti prodotti
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            className="navbar-link"
-                                            to="/admin-orders"
-                                        >
-                                            Lista ordini
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            className="navbar-link"
-                                            to="/login"
-                                            onClick={signoutHandler}
-                                        >
-                                            Logout
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        ) : (
-                            <Link className={scroll ? "navbar-link alt-link" : "navbar-link"} to="/login">
-                                Login
-                            </Link>
-                        )}
-                    </div>
-                    </nav>
-                </header>
+                <Navbar></Navbar>
                 <main>
                     <Route exact path="/shop" component={Shop}></Route>
                     <Route exact path="/cart" component={Cart}></Route>
