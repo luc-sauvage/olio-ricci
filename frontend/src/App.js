@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import Shop from "./screens/shop";
 import Home from "./screens/home";
@@ -30,6 +30,8 @@ export default function App() {
 
     const dispatch = useDispatch();
 
+    const [scroll, setScroll] = useState(false)
+
     function signoutHandler() {
         dispatch(logout());
     }
@@ -38,42 +40,52 @@ export default function App() {
     const arrowRef = useRef();
     const dropDownRef = useRef();
 
-
     function dropDown() {
         dropDownRef.current.classList.toggle("dropdown-off");
         arrowRef.current.classList.toggle("right-pointing");
         arrowRef.current.classList.toggle("down-pointing");
     }
 
+    
+
+    function changeNavBarColor() {
+        if (window.scrollY >= 80) {
+            setScroll(true);
+        } else {
+            setScroll(false);
+        }
+    }
+
+    window.addEventListener("scroll", changeNavBarColor);
 
     return (
         <BrowserRouter>
             <div className="grid-template">
-                <header className="navbar-container row centered">
+                <header className={scroll ? "navbar-container row centered colored" : "navbar-container row centered"}>
                     <nav className="navbar">
                     <div>
                         <a href="/">
                             <img
-                                src="./images/logo.png"
+                                src={scroll ? "./images/logo_green.png" : "./images/logo.png"}
                                 alt="olio ricci logo"
                             ></img>
                         </a>
                     </div>
                     <div>
-                        <Link className="navbar-link" to="/">
+                        <Link className={scroll ? "navbar-link alt-link" : "navbar-link"} to="/">
                             Home
                         </Link>
-                        <Link className="navbar-link" to="/shop">
+                        <Link className={scroll ? "navbar-link alt-link" : "navbar-link"} to="/shop">
                             Negozio
                         </Link>
-                        <Link className="navbar-link" to="/cart">
+                        <Link className={scroll ? "navbar-link alt-link" : "navbar-link"} to="/cart">
                             Carrello
                         </Link>
                         {cart.length > 0 && (
                             <span className="badge">{cart.length}</span>
                         )}
                         {userInfo && !userInfo.isAdmin ? (
-                            <div ref={userNameRef} onClick={dropDown} className="dropdown">
+                            <div ref={userNameRef} onClick={dropDown} className={scroll ? "dropdown alt-dropdown" : "dropdown"}>
                                 <p>
                                     Ciao, {userInfo.firstName}{" "}
                                     <i
@@ -111,7 +123,7 @@ export default function App() {
                                 </ul>
                             </div>
                         ) : userInfo && userInfo.isAdmin ? (
-                            <div ref={userNameRef} onClick={dropDown} className="dropdown">
+                            <div ref={userNameRef} onClick={dropDown} className={scroll ? "dropdown alt-dropdown" : "dropdown"}>
                                 <p>
                                     Ciao, {userInfo.firstName}{" "}
                                     <i ref={arrowRef} className="fa fa-caret-down right-pointing "></i>{" "}
@@ -153,7 +165,7 @@ export default function App() {
                                 </ul>
                             </div>
                         ) : (
-                            <Link className="navbar-link" to="/login">
+                            <Link className={scroll ? "navbar-link alt-link" : "navbar-link"} to="/login">
                                 Login
                             </Link>
                         )}

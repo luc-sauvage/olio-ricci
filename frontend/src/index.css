@@ -33,12 +33,12 @@ body {
 
 header {
     grid-area: header;
-    background-color: #196c00;
+    left: 0;
+    position: fixed;
 }
 
 main {
     grid-area: main;
-    /* padding: 1rem; */
 }
 
 footer {
@@ -72,7 +72,27 @@ p {
 .navbar-container {
     background-color: transparent;
     height: 10rem;
+    width: 100%;
 }
+
+.colored {
+    background-color: white !important;
+    height: 8rem;
+    
+    animation: descend 0.5s ease;
+    
+}
+
+@keyframes descend {
+    0% {
+        top: -10rem;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+
 
 .navbar {
     background-color: transparent;
@@ -80,7 +100,6 @@ p {
     justify-content: space-between;
     align-items: center;
     width: 65%;
-    padding: 2rem;
     font-weight: 500;
 }
 
@@ -91,6 +110,10 @@ a.navbar-link {
 
 a.navbar-link:hover {
     color: orangered;
+}
+
+a.alt-link {
+    color: #00a300;
 }
 
 header a {
@@ -105,11 +128,11 @@ header a {
     background-color: orangered;
     color: white;
     border-radius: 50%;
-    padding: 0.2rem 0.6rem;
+    padding: 0.05rem 0.7rem;
     font-size: 1.6rem;
     position: relative;
     left: -1.5rem;
-    top: -0.7rem;
+    top: -0.8rem;
 }
 
 .button {
@@ -202,7 +225,7 @@ header a {
 }
 
 .card {
-    border: 0.1rem #196c00 solid;
+    border: 0.1rem #00a300 solid;
     background-color: #bfd4bd;
     border-radius: 0.5rem;
     margin: 1rem;
@@ -267,7 +290,7 @@ header a {
     width: 100%;
     height: 80vh;
     position: relative;
-    top: -8rem;
+    top: -10rem;
     z-index: -1000;
     display: flex;
     justify-content: center;
@@ -408,7 +431,7 @@ input {
 }
 
 .form-text-link {
-    color: #196c00;
+    color: #00a300;
 }
 
 .radio {
@@ -425,6 +448,10 @@ input {
     cursor: pointer;
 }
 
+.alt-dropdown {
+    color: #00a300;
+}
+
 .dropdown:hover {
     color: orangered;
 }
@@ -436,7 +463,7 @@ input {
     padding: 1rem;
     z-index: 1000;
     min-width: 12rem;
-    background-color: #196c00;
+    background-color: #00a300;
     margin: 0;
     margin-top: 0.4rem;
     border-radius: 0.5rem;
