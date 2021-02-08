@@ -36,7 +36,7 @@ export default function Shop(props) {
 
     return (
         <>
-            <Hero classes={"shop"} subtitle={"Vendita olio al dettaglio"}></Hero>
+            <Hero classes={"shop"} subtitle={"Il nostro negozio online"}></Hero>
             <div className={classes.gridContainerStyles}>
                 <Grid className={classes.gridStyles} maxWidth={"lg"} container spacing={3}>
                 {loading ? (
