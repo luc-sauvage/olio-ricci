@@ -319,8 +319,7 @@ a.mobile-navbar-link {
 
 /* homepage */
 
-.hero-home {
-    background-image: url("./website-images/olioricci_home.jpg");
+.hero {
     background-position: center;
     background-size: cover;
     width: 100%;
@@ -331,6 +330,13 @@ a.mobile-navbar-link {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.home {
+    background-image: url("./website-images/olioricci_home.jpg"); 
+}
+
+.shop {background-image: url("./website-images/olioricci_shop.jpg"); 
 }
 
 .hero-content-container {
@@ -458,6 +464,7 @@ a.mobile-navbar-link {
         padding-left: 0;
     }
 }
+
 
 /* form  */
 

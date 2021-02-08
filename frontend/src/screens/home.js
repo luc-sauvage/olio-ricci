@@ -8,6 +8,7 @@ import blend from "../website-images/oil-blend.jpg";
 import frantoio from "../website-images/oil-frantoio.jpg";
 import melangolo from "../website-images/oil-melangolo.jpg";
 import moraiolo from "../website-images/oil-moraiolo.jpg";
+import Hero from "../components/hero.js";
 
 export default function Home(props) {
     const redirect = props.location.pathname;
@@ -19,16 +20,7 @@ export default function Home(props) {
 
     return (
         <>
-            <section id="hero" className="hero-home">
-                <div className="hero-content-container">
-                    <div className="hero-title-container">
-                        <h1 className="hero-title">Ricci</h1>
-                        <h2 className="hero-subtitle">
-                            Olio Extravergine di Oliva
-                        </h2>
-                    </div>
-                </div>
-            </section>
+            <Hero classes={"home"} subtitle={"Olio Extravergine di Oliva"}></Hero>
             <section id="frantoio" className="content-section">
                 <div className="content-container">
                     <h2 className="content-title">Chi siamo - Il Frantoio</h2>
