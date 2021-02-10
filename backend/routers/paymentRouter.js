@@ -8,10 +8,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+
+
 const paymentRouter = express.Router();
 
 const stripe = new Stripe(process.env.STRIPE_CLIENT_ID);
-
 
 
 paymentRouter.get("/paypal", (req, res) => {
