@@ -26,11 +26,6 @@ export default function Home(props) {
           <h2 className="content-title">Chi siamo - Il Frantoio</h2>
           <div className="column-container">
             <div className="column left-col">
-              <img
-                className="col-image"
-                alt="paesaggio sui campi d'ulivi montecchio"
-                src={frantoioA}
-              ></img>
               <p className="col-text">
                 L’olio extravergine di Oliva Ricci nasce dalla grande passione
                 per l’olio di Alessandro e Giovanni, padre e figlio che
@@ -49,8 +44,18 @@ export default function Home(props) {
                 sperimentare per dare vita a due olii monovarietali, il Frantoio
                 Ricci e il Moraiolo Ricci.
               </p>
+              <img
+                className="col-image"
+                alt="paesaggio sui campi d'ulivi montecchio"
+                src={frantoioA}
+              ></img>
             </div>
             <div className="column right-col">
+              <img
+                className="col-image col-item-after"
+                alt="raccolta olive campi ulivi azienda agricola ricci montecchio"
+                src={frantoioB}
+              ></img>
               <p className="col-text">
                 Il primo, nell’anno di nascita vince subito il Silver Prize alla
                 competizione Japan Olive Oil Prize, e insieme al secondo si
@@ -70,11 +75,6 @@ export default function Home(props) {
                 ormai centenario che punta allo sviluppo e al mantenimento della
                 terra dove sorgono gli uliveti dell’azienda.
               </p>
-              <img
-                className="col-image"
-                alt="raccolta olive campi ulivi azienda agricola ricci montecchio"
-                src={frantoioB}
-              ></img>
             </div>
           </div>
         </div>
@@ -102,11 +102,11 @@ export default function Home(props) {
         </div>
         <div className="product-container">
           <img
-            className="col-image left-col"
+            className="left-col product-image"
             alt="raccolta olive campi ulivi azienda agricola ricci montecchio"
             src={blend}
           ></img>
-          <div className="right-col shrink flex-col flex-align-left-col">
+          <div className="right-col flex-col flex-align-left-col">
             <h3 className="product-title">Blend</h3>
             <p className="col-text">
               BLEND: Moraiolo, Frantoio, Leccino COLORE: dal verde pistacchio al
@@ -119,7 +119,7 @@ export default function Home(props) {
           </div>
         </div>
         <div className="product-container">
-          <div className="left-col shrink flex-col flex-align-right-col">
+          <div className="left-col flex-col flex-align-right-col col-item-after">
             <h3 className="product-title">Monocultivar Moraiolo</h3>
             <p className="col-text">
               Il Monocultivar Moraiolo ricci al naso mette in rilievo note
@@ -131,18 +131,18 @@ export default function Home(props) {
             <button className="button big">Acquista</button>
           </div>
           <img
-            className="col-image right-col"
+            className="right-col product-image"
             alt="raccolta olive campi ulivi azienda agricola ricci montecchio"
             src={moraiolo}
           ></img>
         </div>
         <div className="product-container">
           <img
-            className="col-image left-col"
+            className="left-col product-image"
             alt="raccolta olive campi ulivi azienda agricola ricci montecchio"
             src={frantoio}
           ></img>
-          <div className="right-col shrink flex-col flex-align-left-col">
+          <div className="right-col flex-col flex-align-left-col">
             <h3 className="product-title">Monocultivar Frantoio</h3>
             <p className="col-text">
               Di buona intensità al naso il Monocultivar Frantoio Ricci offre
@@ -155,7 +155,7 @@ export default function Home(props) {
           </div>
         </div>
         <div className="product-container">
-          <div className="left-col shrink flex-col flex-align-right-col">
+          <div className="left-col flex-col flex-align-right-col col-item-after">
             <h3 className="product-title">Melangolo</h3>
             <p className="col-text">
               Olive di varietà Frantoio, pigiate con melangoli freschi (Citrus X
@@ -166,7 +166,7 @@ export default function Home(props) {
             <button className="button big">Acquista</button>
           </div>
           <img
-            className="col-image right-col"
+            className="right-col product-image"
             alt="raccolta olive campi ulivi azienda agricola ricci montecchio"
             src={melangolo}
           ></img>
