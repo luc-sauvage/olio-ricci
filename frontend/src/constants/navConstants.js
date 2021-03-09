@@ -1,1 +1,1 @@
-export const SET_LAST_VISITED = "SET_LAST_VISITED";
+export const SET_LAST_VISITED = 'SET_LAST_VISITED';
