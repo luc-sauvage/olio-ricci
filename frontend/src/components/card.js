@@ -7,16 +7,19 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { flexbox } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
-    minHeight: '60rem',
+    height: '70rem',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   media: {
     maxHeight: '25rem',
@@ -33,15 +36,16 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'baseline',
     justifyContent: 'space-between',
+    marginTop: 20,
   },
   labelStyling: {
     fontSize: '1.5rem',
   },
+  dropdown: {},
 }));
 
 export default function Card({ prodotto }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
   const dispatch = useDispatch();
   let [quantita, setQuantita] = useState('');
@@ -52,12 +56,7 @@ export default function Card({ prodotto }) {
 
   return (
     <>
-      <ShopCard
-        display="flex"
-        flexDirection="column"
-        key={prodotto._id}
-        className={classes.root}
-      >
+      <ShopCard key={prodotto._id} className={classes.root}>
         <Box display="flex" justifyContent="center">
           <CardMedia
             component="img"
@@ -90,6 +89,7 @@ export default function Card({ prodotto }) {
                   <Select
                     value={quantita}
                     onChange={(e) => setQuantita(e.target.value)}
+                    className={classes.dropdown}
                   >
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
@@ -108,17 +108,12 @@ export default function Card({ prodotto }) {
               <div className="esaurito">{prodotto.disponibile}</div>
             )}
           </div>
-          {/* <button
-                    onClick={() =>
-                        addToCartHandler(prodotto, quantita)
-                    }
-                    className="button block"
-                    >
-                        Aggiungi al carrello
-                    </button> */}
-          <Button onClick={() => addToCartHandler(prodotto, quantita)}>
+          <button
+            onClick={() => addToCartHandler(prodotto, quantita)}
+            className="button block"
+          >
             Aggiungi al carrello
-          </Button>
+          </button>
         </CardContent>
       </ShopCard>
     </>

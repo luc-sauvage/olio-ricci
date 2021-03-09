@@ -52,7 +52,7 @@ export default function Shop(props) {
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
             prodotti.map((prodotto) => (
-              <Grid key={prodotto._id} item xs={12} sm={6} md={4}>
+              <Grid key={prodotto._id} item sm={12} md={6} lg={4}>
                 <Card prodotto={prodotto}></Card>
               </Grid>
             ))
